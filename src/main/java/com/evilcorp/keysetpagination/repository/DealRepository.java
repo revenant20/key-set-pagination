@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface DealRepository extends CrudRepository<Deal, String> {
+public interface DealRepository extends DataRepository<Deal, String> {
 
     @Query(value = """
             select

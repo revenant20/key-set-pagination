@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @ToString
 @Setter
 @Getter
-public class App {
+public class App implements Ent{
     @Id
     private String id;
     private String text;

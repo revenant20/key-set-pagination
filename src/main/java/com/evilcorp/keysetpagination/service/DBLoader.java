@@ -21,12 +21,11 @@ import static java.time.LocalTime.now;
 public class DBLoader {
 
     private final static int ROW_NUMBER = 10_000;
-    private final static int DEAL_ROW_NUMBER = 10_000;
+    private final static int DEAL_ROW_NUMBER = 100_000;
     private final AppRepository appRepository;
     private final DealRepository dealRepository;
 
-    @PostConstruct
-    void init() {
+    public void init() {
         loadApps();
         loadDeals();
     }
