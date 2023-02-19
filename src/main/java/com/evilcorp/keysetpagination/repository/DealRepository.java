@@ -7,25 +7,25 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface AppRepository extends CrudRepository<App, String> {
+public interface DealRepository extends CrudRepository<Deal, String> {
 
     @Query(value = """
             select
             *
-            from apps
+            from deals
             where id >= :id
             order by id limit :size"""
             , nativeQuery = true)
-    List<App> findAllKeySet(String id, int size);
+    List<Deal> findAllKeySet(String id, int size);
 
     @Query(value = """
             select
             *
-            from apps
+            from deals
             order by id limit :size"""
             , nativeQuery = true)
-    List<App> findFirst(int size);
+    List<Deal> findFirst(int size);
 
 
-    Page<App> findAll(Pageable pageable);
+    Page<Deal> findAll(Pageable pageable);
 }
