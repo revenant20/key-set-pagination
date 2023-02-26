@@ -21,12 +21,12 @@ import static java.time.LocalTime.now;
 public class DBLoader {
 
     private final static int ROW_NUMBER = 10_000;
-    private final static int DEAL_ROW_NUMBER = 100_000;
+    private final static int DEAL_ROW_NUMBER = 1_000_000;
     private final AppRepository appRepository;
     private final DealRepository dealRepository;
 
     public void init() {
-        loadApps();
+//        loadApps();
         loadDeals();
     }
 
@@ -38,13 +38,13 @@ public class DBLoader {
             long arg = DEAL_ROW_NUMBER - count;
             log.info("Начало загрузки {} записей", arg);
             var list = new ArrayList<Deal>();
-            for (int i = 0; i < DEAL_ROW_NUMBER; i++) {
+            for (int i = 0; i < arg; i++) {
                 var deal = new Deal();
                 deal.setId(UUID.randomUUID().toString());
                 deal.setText(UUID.randomUUID() + (Math.random() > 0.3 ? UUID.randomUUID().toString() : ""));
                 deal.setType(UUID.randomUUID() + (Math.random() > 0.6 ? UUID.randomUUID().toString() : ""));
                 list.add(deal);
-                if (list.size() > 200) {
+                if (list.size() > 2000 || i == arg - 1) {
                     dealRepository.saveAll(list);
                     loading += list.size();
                     if (i % 50 == 0) {

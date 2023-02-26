@@ -29,7 +29,7 @@ public class ApplicationUploader {
             AppsSliceUploader.class
     );
 
-    @PostConstruct
+//    @PostConstruct
     public void initPageable() {
         loader.init();
         UploadCommand command = UploadCommand.builder().pageSize(10).build();
