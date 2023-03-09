@@ -2,8 +2,8 @@ package com.evilcorp.keysetpagination.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
@@ -28,4 +28,7 @@ public interface DealRepository extends DataRepository<Deal, String> {
 
 
     Page<Deal> findAll(Pageable pageable);
+
+    Slice<Deal> findAllDealsBy(Pageable page);
+
 }

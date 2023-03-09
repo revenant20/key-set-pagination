@@ -30,7 +30,7 @@ public abstract class SliceUploader<T extends Ent> extends BaseUploader {
         int i = 1;
         while (firstPage.hasNext()) {
             var start = now();
-            var slice = repository.findAll(PageRequest.of(i, command.getPageSize()));
+            var slice = repository.findAllDealsBy(PageRequest.of(i, command.getPageSize()));
             var end = now();
             var tuple = new DataTuple();
             tuple.setPage(i);
