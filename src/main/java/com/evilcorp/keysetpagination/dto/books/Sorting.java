@@ -1,4 +1,8 @@
 package com.evilcorp.keysetpagination.dto.books;
 
-public record Sorting(String fieldName) {
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
+
+public record Sorting(String fieldName, Sort.Direction direction, List<String> properties) {
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,6 +21,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,21 +37,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Rollback(value = false)
 @Transactional(propagation = Propagation.NEVER)
 
-class BookControllerTest {
+class BookDtoControllerTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @Test
     void test() throws Exception {
-        var value = new GetBookRequest(new BookFilter(), new Sorting("as"));
         mockMvc.perform(
                 post("/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                  "filter": {},
+                                  "filter": {
+                                    "limit": 1,
+                                    "offset": 1
+                                  },
                                   "sorting": {
+                                    "direction": "ASC",
                                     "fieldName": "str"
                                   }
                                 }"""

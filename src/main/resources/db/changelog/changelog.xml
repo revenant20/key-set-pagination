@@ -86,4 +86,13 @@
             <column name="text" value="123"/>
         </insert>
     </changeSet>
+    <changeSet id="3" author="sazonovfm">
+        <createTable tableName="books">
+            <column name="id" type="varchar">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="rating" type="number"/>
+            <column name="description" type="varchar"/>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
