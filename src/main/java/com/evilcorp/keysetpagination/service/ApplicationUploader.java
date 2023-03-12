@@ -1,18 +1,17 @@
 package com.evilcorp.keysetpagination.service;
 
-import com.evilcorp.keysetpagination.service.apps.AppsKeySetUploader;
-import com.evilcorp.keysetpagination.service.apps.AppsPageUploader;
-import com.evilcorp.keysetpagination.service.apps.AppsSliceUploader;
-import com.evilcorp.keysetpagination.service.base.BaseUploader;
+import com.evilcorp.keysetpagination.dto.UploadCommand;
+import com.evilcorp.keysetpagination.service.apps.AppsKeySetWalker;
+import com.evilcorp.keysetpagination.service.apps.AppsPageWalker;
+import com.evilcorp.keysetpagination.service.apps.AppsSliceWalker;
+import com.evilcorp.keysetpagination.service.base.BaseWalker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import static java.time.LocalTime.now;
 
@@ -21,26 +20,26 @@ import static java.time.LocalTime.now;
 @RequiredArgsConstructor
 public class ApplicationUploader {
 
-    private final List<BaseUploader> baseUploaders;
+    private final List<BaseWalker> baseWalkers;
     private final DBLoader loader;
-    private final Set<Class<? extends BaseUploader>> classes = Set.of(
-            AppsKeySetUploader.class,
-            AppsPageUploader.class,
-            AppsSliceUploader.class
+    private final Set<Class<? extends BaseWalker>> classes = Set.of(
+            AppsKeySetWalker.class,
+            AppsPageWalker.class,
+            AppsSliceWalker.class
     );
 
 //    @PostConstruct
     public void initPageable() {
         loader.init();
         UploadCommand command = UploadCommand.builder().pageSize(10).build();
-        baseUploaders
+        baseWalkers
                 .stream()
                 .filter(cl -> !classes.contains(cl.getClass()))
-                .forEach(baseUploader -> {
+                .forEach(baseWalker -> {
                     var start = now();
-                    baseUploader.upload(command);
+                    baseWalker.upload(command);
                     var end = now();
-                    log.info("Загрузка с помощью {} завершена за {} секунд", baseUploader.getClass(), start.until(end, ChronoUnit.SECONDS));
+                    log.info("Загрузка с помощью {} завершена за {} секунд", baseWalker.getClass(), start.until(end, ChronoUnit.SECONDS));
                 });
     }
 }

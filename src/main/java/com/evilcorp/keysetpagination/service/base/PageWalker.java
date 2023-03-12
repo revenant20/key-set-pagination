@@ -1,13 +1,12 @@
 package com.evilcorp.keysetpagination.service.base;
 
-import com.evilcorp.keysetpagination.dto.DataTuple;
+import com.evilcorp.keysetpagination.dto.PageLoadDuration;
 import com.evilcorp.keysetpagination.repository.DataRepository;
-import com.evilcorp.keysetpagination.repository.Ent;
-import com.evilcorp.keysetpagination.service.MyCsvWriter;
-import com.evilcorp.keysetpagination.service.UploadCommand;
+import com.evilcorp.keysetpagination.entity.Ent;
+import com.evilcorp.keysetpagination.writers.SimpleCsvWriter;
+import com.evilcorp.keysetpagination.dto.UploadCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Component;
 
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -15,24 +14,24 @@ import java.util.ArrayList;
 import static java.time.LocalDateTime.now;
 
 @Slf4j
-public abstract class PageUploader<T extends Ent> extends BaseUploader {
+public abstract class PageWalker<T extends Ent> extends BaseWalker {
 
     private final DataRepository<T, String> repository;
 
-    public PageUploader(DataRepository<T, String> repository) {
+    public PageWalker(DataRepository<T, String> repository) {
         this.repository = repository;
     }
 
     @Override
-    protected void upload(UploadCommand command, MyCsvWriter<DataTuple> writer) {
+    protected void upload(UploadCommand command, SimpleCsvWriter<PageLoadDuration> writer) {
         var all = repository.findAll(PageRequest.of(0, command.getPageSize()));
-        var tuples = new ArrayList<DataTuple>();
+        var tuples = new ArrayList<PageLoadDuration>();
         int totalPages = all.getTotalPages();
         for (int i = 1; i < totalPages; i++) {
             var start = now();
             repository.findAll(PageRequest.of(i, command.getPageSize()));
             var end = now();
-            var tuple = new DataTuple();
+            var tuple = new PageLoadDuration();
             tuple.setPage(i);
             tuple.setTime(start.until(end, ChronoUnit.MILLIS));
             tuples.add(tuple);

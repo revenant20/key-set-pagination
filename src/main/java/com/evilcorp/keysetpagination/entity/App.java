@@ -1,4 +1,4 @@
-package com.evilcorp.keysetpagination.repository;
+package com.evilcorp.keysetpagination.entity;
 
 
 import lombok.Getter;
@@ -10,11 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "deals")
+@Table(name = "apps")
 @ToString
 @Setter
 @Getter
-public class Deal implements Ent {
+public class App implements Ent {
     @Id
     private String id;
     private String text;

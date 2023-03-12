@@ -1,11 +1,12 @@
 package com.evilcorp.keysetpagination.service;
 
-import com.evilcorp.keysetpagination.repository.App;
+import com.evilcorp.keysetpagination.entity.App;
 import com.evilcorp.keysetpagination.repository.AppRepository;
-import com.evilcorp.keysetpagination.repository.Deal;
+import com.evilcorp.keysetpagination.entity.Deal;
 import com.evilcorp.keysetpagination.repository.DealRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.temporal.ChronoUnit;
@@ -19,13 +20,15 @@ import static java.time.LocalTime.now;
 @RequiredArgsConstructor
 public class DBLoader {
 
-    private final static int ROW_NUMBER = 10_000;
-    private final static int DEAL_ROW_NUMBER = 1_000_000;
+    @Value("${app.row.number}")
+    private Integer appRowNumber;
+    @Value("${deal.row.number}")
+    private Integer dealRowNumber;
     private final AppRepository appRepository;
     private final DealRepository dealRepository;
 
     public void init() {
-//        loadApps();
+        loadApps();
         loadDeals();
     }
 
@@ -33,8 +36,8 @@ public class DBLoader {
         long count = dealRepository.count();
         var loading = 0;
         var start = now();
-        if (count < DEAL_ROW_NUMBER) {
-            long arg = DEAL_ROW_NUMBER - count;
+        if (count < dealRowNumber) {
+            long arg = dealRowNumber - count;
             log.info("Начало загрузки {} записей", arg);
             var list = new ArrayList<Deal>();
             for (int i = 0; i < arg; i++) {
@@ -61,11 +64,11 @@ public class DBLoader {
         long count = appRepository.count();
         var loading = 0;
         var start = now();
-        if (count < ROW_NUMBER) {
-            long arg = ROW_NUMBER - count;
+        if (count < appRowNumber) {
+            long arg = appRowNumber - count;
             log.info("Начало загрузки {} записей", arg);
             var list = new ArrayList<App>();
-            for (int i = 0; i < ROW_NUMBER; i++) {
+            for (int i = 0; i < appRowNumber; i++) {
                 var app = new App();
                 app.setId(UUID.randomUUID().toString());
                 app.setText(UUID.randomUUID() + (Math.random() > 0.3 ? UUID.randomUUID().toString() : ""));

@@ -1,4 +1,4 @@
-package com.evilcorp.keysetpagination.service;
+package com.evilcorp.keysetpagination.writers;
 
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -10,15 +10,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public class MyCsvWriter<T> implements Closeable {
+public class SimpleCsvWriter<T> implements Closeable {
 
-    private final StatefulBeanToCsv<T> sbc;
+    private final StatefulBeanToCsv<T> statefulBeanToCsv;
 
     private final FileWriter writer;
 
-    public MyCsvWriter(FileWriter writer) {
+    public SimpleCsvWriter(FileWriter writer) {
         this.writer = writer;
-        this.sbc = new StatefulBeanToCsvBuilder<T>(writer)
+        this.statefulBeanToCsv = new StatefulBeanToCsvBuilder<T>(writer)
                 .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
                 .withSeparator(';')
                 .build();
@@ -26,7 +26,7 @@ public class MyCsvWriter<T> implements Closeable {
 
     @SneakyThrows
     public void writeToCsv(List<T> updates) {
-        sbc.write(updates);
+        statefulBeanToCsv.write(updates);
     }
 
     @Override

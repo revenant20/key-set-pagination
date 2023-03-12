@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DataTuple {
+public class PageLoadDuration {
     @CsvBindByName(column = "page")
     private int page;
     @CsvBindByName(column = "time")

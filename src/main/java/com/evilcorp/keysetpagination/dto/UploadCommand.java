@@ -1,4 +1,4 @@
-package com.evilcorp.keysetpagination.service;
+package com.evilcorp.keysetpagination.dto;
 
 import lombok.Builder;
 import lombok.Value;

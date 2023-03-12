@@ -2,10 +2,10 @@ package com.evilcorp.keysetpagination;
 
 import com.evilcorp.keysetpagination.repository.DealRepository;
 import com.evilcorp.keysetpagination.service.DBLoader;
-import com.evilcorp.keysetpagination.service.UploadCommand;
-import com.evilcorp.keysetpagination.service.deals.DealsKeySetUploader;
-import com.evilcorp.keysetpagination.service.deals.DealsPageUploader;
-import com.evilcorp.keysetpagination.service.deals.DealsSliceUploader;
+import com.evilcorp.keysetpagination.dto.UploadCommand;
+import com.evilcorp.keysetpagination.service.deals.DealsKeySetWalker;
+import com.evilcorp.keysetpagination.service.deals.DealsPageWalker;
+import com.evilcorp.keysetpagination.service.deals.DealsSliceWalker;
 import com.evilcorp.keysetpagination.testcontainers.TestcontainersInitializer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,13 +36,13 @@ public class FilltestcontainersTest {
     DealRepository repository;
 
     @Autowired
-    DealsKeySetUploader keysetUploader;
+    DealsKeySetWalker keysetUploader;
 
     @Autowired
-    DealsPageUploader pageUploader;
+    DealsPageWalker pageUploader;
 
     @Autowired
-    DealsSliceUploader sliceUploader;
+    DealsSliceWalker sliceUploader;
 
     @Test
     public void fillWithData() {
