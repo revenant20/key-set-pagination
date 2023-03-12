@@ -2,13 +2,10 @@ package com.evilcorp.keysetpagination.service;
 
 import com.evilcorp.keysetpagination.dto.books.BookDto;
 import com.evilcorp.keysetpagination.dto.books.BookFilter;
+import com.evilcorp.keysetpagination.dto.books.ListOfBook;
 import com.evilcorp.keysetpagination.dto.books.Sorting;
-import com.evilcorp.keysetpagination.entity.Book;
 import com.evilcorp.keysetpagination.repository.BookRepository;
-import com.evilcorp.keysetpagination.repository.DealRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
