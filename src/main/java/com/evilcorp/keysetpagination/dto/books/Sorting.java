@@ -4,5 +4,5 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
-public record Sorting(String fieldName, Sort.Direction direction, List<String> properties) {
+public record Sorting(Sort.Direction direction, List<String> properties) {
 }

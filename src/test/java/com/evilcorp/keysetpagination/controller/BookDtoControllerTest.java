@@ -55,8 +55,29 @@ class BookDtoControllerTest {
                                   },
                                   "sorting": {
                                     "direction": "ASC",
-                                    "fieldName": "str"
+                                    "properties": ["id"]
                                   }
+                                }"""
+                        )
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    void testTokenExists() throws Exception {
+        mockMvc.perform(
+                post("/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "filter": {
+                                    "limit": 1,
+                                    "offset": 1
+                                  },
+                                  "sorting": {
+                                    "direction": "ASC",
+                                    "fieldName": "str"
+                                  },
+                                  "token": "ewogICJmaWx0ZXIiOiB7CiAgICAibGltaXQiOiAxLAogICAgIm9mZnNldCI6IDEKICB9LAogICJzb3J0aW5nIjogewogICAgImRpcmVjdGlvbiI6ICJBU0MiLAogICAgInByb3BlcnRpZXMiOiBbImlkIl0KICB9Cn0="
                                 }"""
 
                         )
