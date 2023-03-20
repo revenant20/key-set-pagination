@@ -65,6 +65,7 @@ public class DBLoader {
         }
         var end = now();
         log.info("Загрузилось за {} секунд", start.until(end, ChronoUnit.SECONDS));
+        System.out.println("dealRepository.count() = " + dealRepository.count());
     }
 
     private void loadApps() {
@@ -86,7 +87,7 @@ public class DBLoader {
                     app.setDate(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
                 }
                 list.add(app);
-                if (list.size() > 200) {
+                if (list.size() > 2000 || i == arg - 1) {
                     appRepository.saveAll(list);
                     loading += list.size();
                     if (i % 50 == 0) {
@@ -98,6 +99,7 @@ public class DBLoader {
         }
         var end = now();
         log.info("Загрузилось за {} секунд", start.until(end, ChronoUnit.SECONDS));
+        System.out.println("appRepository.count() = " + appRepository.count());
     }
 
 }
