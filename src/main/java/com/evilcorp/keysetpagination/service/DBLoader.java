@@ -9,9 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static java.time.LocalTime.now;
 
@@ -45,12 +47,17 @@ public class DBLoader {
                 deal.setId(UUID.randomUUID().toString());
                 deal.setText(UUID.randomUUID() + (Math.random() > 0.3 ? UUID.randomUUID().toString() : ""));
                 deal.setType(UUID.randomUUID() + (Math.random() > 0.6 ? UUID.randomUUID().toString() : ""));
+                if (Math.random() > 0.5) {
+                    deal.setDate(LocalDate.now().plusMonths(ThreadLocalRandom.current().nextInt(40)));
+                } else {
+                    deal.setDate(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
+                }
                 list.add(deal);
                 if (list.size() > 2000 || i == arg - 1) {
                     dealRepository.saveAll(list);
                     loading += list.size();
                     if (i % 50 == 0) {
-                        log.info("загрузил {}", (double)(loading * 100L) / (double) arg);
+                        log.info("загрузил {}", (double) (loading * 100L) / (double) arg);
                     }
                     list.clear();
                 }
@@ -73,12 +80,17 @@ public class DBLoader {
                 app.setId(UUID.randomUUID().toString());
                 app.setText(UUID.randomUUID() + (Math.random() > 0.3 ? UUID.randomUUID().toString() : ""));
                 app.setType(UUID.randomUUID() + (Math.random() > 0.6 ? UUID.randomUUID().toString() : ""));
+                if (Math.random() > 0.5) {
+                    app.setDate(LocalDate.now().plusMonths(ThreadLocalRandom.current().nextInt(40)));
+                } else {
+                    app.setDate(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
+                }
                 list.add(app);
                 if (list.size() > 200) {
                     appRepository.saveAll(list);
                     loading += list.size();
                     if (i % 50 == 0) {
-                        log.info("загрузил {}", (double)(loading * 100L) / (double) arg);
+                        log.info("загрузил {}", (double) (loading * 100L) / (double) arg);
                     }
                     list.clear();
                 }

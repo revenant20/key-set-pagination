@@ -95,4 +95,16 @@
             <column name="description" type="varchar"/>
         </createTable>
     </changeSet>
+    <changeSet id="4" author="sazonovfm">
+        <addColumn tableName="apps">
+            <column name="date" type="date"/>
+        </addColumn>
+        <addColumn tableName="deals">
+            <column name="date" type="date"/>
+        </addColumn>
+        <createIndex tableName="apps" indexName="id_and_date_index">
+            <column name="id"/>
+            <column name="date"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>
