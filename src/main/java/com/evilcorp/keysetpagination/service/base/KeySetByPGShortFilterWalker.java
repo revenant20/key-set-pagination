@@ -1,10 +1,10 @@
 package com.evilcorp.keysetpagination.service.base;
 
 import com.evilcorp.keysetpagination.dto.PageLoadDuration;
-import com.evilcorp.keysetpagination.repository.DataRepository;
-import com.evilcorp.keysetpagination.entity.Ent;
-import com.evilcorp.keysetpagination.writers.SimpleCsvWriter;
 import com.evilcorp.keysetpagination.dto.UploadCommand;
+import com.evilcorp.keysetpagination.entity.Ent;
+import com.evilcorp.keysetpagination.repository.DataRepository;
+import com.evilcorp.keysetpagination.writers.SimpleCsvWriter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.temporal.ChronoUnit;
@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import static java.time.LocalDateTime.now;
 
 @Slf4j
-public abstract class KeySetWalker<T extends Ent> extends BaseWalker {
+public abstract class KeySetByPGShortFilterWalker<T extends Ent> extends BaseWalker {
 
     private final DataRepository<T, String> repository;
 
-    public KeySetWalker(DataRepository<T, String> repository) {
+    public KeySetByPGShortFilterWalker(DataRepository<T, String> repository) {
         this.repository = repository;
     }
 
@@ -26,14 +26,17 @@ public abstract class KeySetWalker<T extends Ent> extends BaseWalker {
         long count = repository.count();
         log.info("В таблице {} записей", count);
         int size = command.getPageSize() + 1;
-        var firstPage = repository.findFirst(size);
+        var firstPage = repository.findFirstByFilter(size);
         var tuples = new ArrayList<PageLoadDuration>();
-        var lastId = firstPage.get(firstPage.size() - 1).getId();
+        var ent = firstPage.get(firstPage.size() - 1);
+        var lastId = ent.getId();
+        var lastDate = ent.getDate();
         for (var i = 0; ; i++) {
             var start = now();
-            var rows = repository.findAllKeySet(lastId, size);
+            var rows = repository.findAllByPGShortFilter(size, lastDate, lastId);
             var end = now();
             lastId = rows.get(rows.size() - 1).getId();
+            lastDate = rows.get(rows.size() - 1).getDate();
             var tuple = new PageLoadDuration();
             tuple.setPage(i);
             tuple.setTime(start.until(end, ChronoUnit.MILLIS));
@@ -48,5 +51,6 @@ public abstract class KeySetWalker<T extends Ent> extends BaseWalker {
         }
         writer.writeToCsv(tuples);
         log.info("CSV CREATES DONE");
+
     }
 }

@@ -16,12 +16,12 @@ public abstract class BaseWalker implements Walker {
 
     @SneakyThrows
     @Override
-    public void upload(UploadCommand command) {
+    public void walk(UploadCommand command) {
         log.info("{} начинает выгрузку", this.getClass().getSimpleName());
         try (var writer = new SimpleCsvWriter<PageLoadDuration>(new FileWriter(getPath()))) {
-            upload(command, writer);
+            walk(command, writer);
         }
     }
 
-    protected abstract void upload(UploadCommand command, SimpleCsvWriter<PageLoadDuration> writer);
+    protected abstract void walk(UploadCommand command, SimpleCsvWriter<PageLoadDuration> writer);
 }

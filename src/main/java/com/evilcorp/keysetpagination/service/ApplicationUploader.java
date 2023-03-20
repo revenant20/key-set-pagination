@@ -37,7 +37,7 @@ public class ApplicationUploader {
                 .filter(cl -> !classes.contains(cl.getClass()))
                 .forEach(baseWalker -> {
                     var start = now();
-                    baseWalker.upload(command);
+                    baseWalker.walk(command);
                     var end = now();
                     log.info("Загрузка с помощью {} завершена за {} секунд", baseWalker.getClass(), start.until(end, ChronoUnit.SECONDS));
                 });

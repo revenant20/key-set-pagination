@@ -3,6 +3,8 @@ package com.evilcorp.keysetpagination;
 import com.evilcorp.keysetpagination.repository.DealRepository;
 import com.evilcorp.keysetpagination.service.DBLoader;
 import com.evilcorp.keysetpagination.dto.UploadCommand;
+import com.evilcorp.keysetpagination.service.Walker;
+import com.evilcorp.keysetpagination.service.apps.AppsKeySetByFilterWalker;
 import com.evilcorp.keysetpagination.service.deals.DealsKeySetWalker;
 import com.evilcorp.keysetpagination.service.deals.DealsPageWalker;
 import com.evilcorp.keysetpagination.service.deals.DealsSliceWalker;
@@ -18,6 +20,8 @@ import org.springframework.test.context.junit.jupiter.EnabledIf;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -44,15 +48,23 @@ public class FilltestcontainersTest {
     @Autowired
     DealsSliceWalker sliceUploader;
 
+    @Autowired
+    List<Walker> walkers;
+
+    @Autowired
+    AppsKeySetByFilterWalker appsKeySetByFilterWalker;
+
     @Test
     public void fillWithData() {
         assertThat(loader).isNotNull();
         loader.init();
         assertThat(repository.count()).isGreaterThan(10);
-        final UploadCommand cmd = UploadCommand.builder().pageSize(1000).build();
-        keysetUploader.upload(cmd);
-        pageUploader.upload(cmd);
-        sliceUploader.upload(cmd);
+        final UploadCommand cmd = UploadCommand.builder().pageSize(100).build();
+        //keysetUploader.upload(cmd);
+        //pageUploader.upload(cmd);
+        //sliceUploader.upload(cmd);
+        walkers.forEach(walker -> walker.walk(cmd));
+        //appsKeySetByFilterWalker.upload(cmd);
     }
 
 }

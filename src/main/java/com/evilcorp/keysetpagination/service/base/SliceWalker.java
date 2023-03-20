@@ -23,13 +23,13 @@ public abstract class SliceWalker<T extends Ent> extends BaseWalker {
     }
 
     @Override
-    protected void upload(UploadCommand command, SimpleCsvWriter<PageLoadDuration> writer) {
-        var firstPage = repository.findAllDealsBy(PageRequest.of(0, command.getPageSize()));
+    protected void walk(UploadCommand command, SimpleCsvWriter<PageLoadDuration> writer) {
+        var firstPage = repository.findAllBy(PageRequest.of(0, command.getPageSize()));
         var updates = new ArrayList<PageLoadDuration>();
         int i = 1;
         while (firstPage.hasNext()) {
             var start = now();
-            var slice = repository.findAllDealsBy(PageRequest.of(i, command.getPageSize()));
+            var slice = repository.findAllBy(PageRequest.of(i, command.getPageSize()));
             var end = now();
             var tuple = new PageLoadDuration();
             tuple.setPage(i);

@@ -23,7 +23,7 @@ public abstract class PageWalker<T extends Ent> extends BaseWalker {
     }
 
     @Override
-    protected void upload(UploadCommand command, SimpleCsvWriter<PageLoadDuration> writer) {
+    protected void walk(UploadCommand command, SimpleCsvWriter<PageLoadDuration> writer) {
         var all = repository.findAll(PageRequest.of(0, command.getPageSize()));
         var tuples = new ArrayList<PageLoadDuration>();
         int totalPages = all.getTotalPages();
