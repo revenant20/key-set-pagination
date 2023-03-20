@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -59,11 +60,14 @@ public class FilltestcontainersTest {
         assertThat(loader).isNotNull();
         loader.init();
         assertThat(repository.count()).isGreaterThan(10);
-        final UploadCommand cmd = UploadCommand.builder().pageSize(100).build();
+        final UploadCommand cmd = UploadCommand.builder().pageSize(500).build();
         //keysetUploader.upload(cmd);
         //pageUploader.upload(cmd);
         //sliceUploader.upload(cmd);
-        walkers.forEach(walker -> walker.walk(cmd));
+        walkers.stream()
+                .filter(Predicate.not(cl -> cl.getClass().equals(DealsPageWalker.class)))
+                .filter(Predicate.not(cl -> cl.getClass().equals(DealsSliceWalker.class)))
+                .forEach(walker -> walker.walk(cmd));
         //appsKeySetByFilterWalker.upload(cmd);
     }
 
