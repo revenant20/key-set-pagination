@@ -1,8 +1,8 @@
 package com.evilcorp.keysetpagination.service;
 
 import com.evilcorp.keysetpagination.entity.App;
-import com.evilcorp.keysetpagination.repository.AppRepository;
 import com.evilcorp.keysetpagination.entity.Deal;
+import com.evilcorp.keysetpagination.repository.AppRepository;
 import com.evilcorp.keysetpagination.repository.DealRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +44,6 @@ public class DBLoader {
             var list = new ArrayList<Deal>();
             for (int i = 0; i < arg; i++) {
                 var deal = new Deal();
-                deal.setId(UUID.randomUUID().toString());
                 deal.setText(UUID.randomUUID() + (Math.random() > 0.3 ? UUID.randomUUID().toString() : ""));
                 deal.setType(UUID.randomUUID() + (Math.random() > 0.6 ? UUID.randomUUID().toString() : ""));
                 if (Math.random() > 0.5) {
@@ -53,7 +52,7 @@ public class DBLoader {
                     deal.setDate(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
                 }
                 list.add(deal);
-                if (list.size() > 2000 || i == arg - 1) {
+                if (list.size() > 1000 || i == arg - 1) {
                     dealRepository.saveAll(list);
                     loading += list.size();
                     if (i % 50 == 0) {
@@ -78,7 +77,6 @@ public class DBLoader {
             var list = new ArrayList<App>();
             for (int i = 0; i < appRowNumber; i++) {
                 var app = new App();
-                app.setId(UUID.randomUUID().toString());
                 app.setText(UUID.randomUUID() + (Math.random() > 0.3 ? UUID.randomUUID().toString() : ""));
                 app.setType(UUID.randomUUID() + (Math.random() > 0.6 ? UUID.randomUUID().toString() : ""));
                 if (Math.random() > 0.5) {
@@ -87,7 +85,7 @@ public class DBLoader {
                     app.setDate(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
                 }
                 list.add(app);
-                if (list.size() > 2000 || i == arg - 1) {
+                if (list.size() > 1000 || i == arg - 1) {
                     appRepository.saveAll(list);
                     loading += list.size();
                     if (i % 50 == 0) {
