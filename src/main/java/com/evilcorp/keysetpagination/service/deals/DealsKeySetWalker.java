@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class DealsKeySetWalker extends KeySetWalker<Deal> {
 
     @Getter
-    private final String path = "./deals_count.csv";
+    private final String path = "./deals_count_keyset.csv";
 
     public DealsKeySetWalker(DealRepository repository) {
         super(repository);

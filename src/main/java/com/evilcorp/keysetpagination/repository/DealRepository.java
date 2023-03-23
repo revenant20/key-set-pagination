@@ -40,24 +40,12 @@ public interface DealRepository extends DataRepository<Deal, String> {
             select
             *
             from deals
-            where 1<>1
-            or date > :date
-            or date = :date and id > :str
-            or date = :date and id = :str
+            where date >= :date
+            and (date > :date or id >= :str)
             order by date, id
             limit :size"""
             , nativeQuery = true)
     List<Deal> findAllByFilter(int size, LocalDate date, String str);
-
-    @Query(value = """
-            select
-            *
-            from deals
-            where date >= :date and id >= :str
-            order by date, id
-            limit :size"""
-            , nativeQuery = true)
-    List<Deal> findAllByShortFilter(int size, LocalDate date, String str);
 
     @Query(value = """
             select

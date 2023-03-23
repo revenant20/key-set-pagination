@@ -67,10 +67,9 @@ public class DBLoader {
         System.out.println("dealRepository.count() = " + dealRepository.count());
     }
 
-    private void loadApps() {
+    public void loadApps() {
         long count = appRepository.count();
         var loading = 0;
-        var start = now();
         if (count < appRowNumber) {
             long arg = appRowNumber - count;
             log.info("Начало загрузки {} записей", arg);
@@ -95,8 +94,6 @@ public class DBLoader {
                 }
             }
         }
-        var end = now();
-        log.info("Загрузилось за {} секунд", start.until(end, ChronoUnit.SECONDS));
         System.out.println("appRepository.count() = " + appRepository.count());
     }
 

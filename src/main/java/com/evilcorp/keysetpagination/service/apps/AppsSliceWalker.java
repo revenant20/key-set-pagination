@@ -7,14 +7,12 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static java.time.LocalDateTime.now;
-
 @Slf4j
 @Component
 public class AppsSliceWalker extends SliceWalker<App> {
 
     @Getter
-    private final String path = "./taskSlice.csv";
+    private final String path = "./apps_count_slice.csv";
 
     public AppsSliceWalker(AppRepository repository) {
         super(repository);

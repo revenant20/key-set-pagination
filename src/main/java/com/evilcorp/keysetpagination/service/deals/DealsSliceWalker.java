@@ -14,7 +14,7 @@ import static java.time.LocalDateTime.now;
 public class DealsSliceWalker extends SliceWalker<Deal> {
 
     @Getter
-    private final String path = "./deals_slice_count.csv";
+    private final String path = "./deals_count_slice.csv";
 
     public DealsSliceWalker(DealRepository repository) {
         super(repository);

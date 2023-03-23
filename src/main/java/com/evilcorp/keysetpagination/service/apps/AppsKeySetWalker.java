@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class AppsKeySetWalker extends KeySetWalker<App> {
 
     @Getter
-    private final String path = "./taskKey.csv";
+    private final String path = "./apps_count_keyset.csv";
 
     public AppsKeySetWalker(AppRepository repository) {
         super(repository);

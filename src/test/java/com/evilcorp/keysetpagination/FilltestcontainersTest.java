@@ -72,6 +72,7 @@ public class FilltestcontainersTest {
         walkers.stream()
                 .filter(Predicate.not(cl -> cl.getClass().equals(DealsPageWalker.class)))
                 .filter(Predicate.not(cl -> cl.getClass().equals(DealsSliceWalker.class)))
+                //.parallel()
                 .forEach(walker -> {
                     var start = now();
                     walker.walk(cmd);

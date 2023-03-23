@@ -16,36 +16,7 @@
             <column name="type" type="varchar"/>
             <column name="text" type="varchar"/>
         </createTable>
-        <insert tableName="apps">
-            <column name="id" value="1"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
-        <insert tableName="apps">
-            <column name="id" value="2"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
-        <insert tableName="apps">
-            <column name="id" value="3"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
-        <insert tableName="apps">
-            <column name="id" value="4"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
-        <insert tableName="apps">
-            <column name="id" value="5"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
-        <insert tableName="apps">
-            <column name="id" value="6"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
+
     </changeSet>
     <changeSet id="2" author="sazonovfm">
         <createTable tableName="deals">
@@ -55,36 +26,6 @@
             <column name="type" type="varchar"/>
             <column name="text" type="varchar"/>
         </createTable>
-        <insert tableName="deals">
-            <column name="id" value="1"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
-        <insert tableName="deals">
-            <column name="id" value="2"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
-        <insert tableName="deals">
-            <column name="id" value="3"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
-        <insert tableName="deals">
-            <column name="id" value="4"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
-        <insert tableName="deals">
-            <column name="id" value="5"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
-        <insert tableName="deals">
-            <column name="id" value="6"/>
-            <column name="type" value="123"/>
-            <column name="text" value="123"/>
-        </insert>
     </changeSet>
     <changeSet id="3" author="sazonovfm">
         <createTable tableName="books">
@@ -103,8 +44,8 @@
             <column name="date" type="date"/>
         </addColumn>
         <createIndex tableName="apps" indexName="id_and_date_index">
-            <column name="id"/>
             <column name="date"/>
+            <column name="id"/>
         </createIndex>
     </changeSet>
 </databaseChangeLog>

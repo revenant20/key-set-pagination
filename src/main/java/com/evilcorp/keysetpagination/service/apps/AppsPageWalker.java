@@ -7,14 +7,12 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static java.time.LocalDateTime.now;
-
 @Slf4j
 @Component
 public class AppsPageWalker extends PageWalker<App> {
 
     @Getter
-    private final String path = "./task.csv";
+    private final String path = "./apps_count_page.csv";
 
     public AppsPageWalker(AppRepository repository) {
         super(repository);

@@ -25,7 +25,5 @@ public interface DataRepository<T extends Ent, M> extends CrudRepository<T, M> {
 
     List<T> findAllByFilter(int size, LocalDate date, String str);
 
-    List<T> findAllByShortFilter(int size, LocalDate date, String str);
-
     List<T> findAllByPGShortFilter(int size, LocalDate date, String str);
 }

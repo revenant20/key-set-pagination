@@ -41,10 +41,8 @@ public interface AppRepository extends DataRepository<App, String> {
             select
             *
             from apps
-            where 1<>1
-            or date > :date
-            or date = :date and id > :str
-            or date = :date and id = :str
+            where date >= :date
+            and (date > :date or id >= :str)
             order by date, id
             limit :size"""
             , nativeQuery = true)
@@ -54,7 +52,7 @@ public interface AppRepository extends DataRepository<App, String> {
             select
             *
             from apps
-            where date >= :date and id >= :str
+            where (date >= :date or date is null) and id >= :str
             order by date, id
             limit :size"""
             , nativeQuery = true)

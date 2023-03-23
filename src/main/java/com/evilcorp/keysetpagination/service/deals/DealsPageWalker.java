@@ -14,7 +14,7 @@ import static java.time.LocalDateTime.now;
 public class DealsPageWalker extends PageWalker<Deal> {
 
     @Getter
-    private final String path = "./deals_page_count.csv";
+    private final String path = "./deals_count_page.csv";
 
     public DealsPageWalker(DealRepository repository) {
         super(repository);
