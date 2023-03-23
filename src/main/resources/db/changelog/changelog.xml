@@ -38,13 +38,13 @@
     </changeSet>
     <changeSet id="4" author="sazonovfm">
         <addColumn tableName="apps">
-            <column name="date" type="date"/>
+            <column name="created_at" type="date"/>
         </addColumn>
         <addColumn tableName="deals">
-            <column name="date" type="date"/>
+            <column name="created_at" type="date"/>
         </addColumn>
         <createIndex tableName="apps" indexName="id_and_date_index">
-            <column name="date"/>
+            <column name="created_at"/>
             <column name="id"/>
         </createIndex>
     </changeSet>

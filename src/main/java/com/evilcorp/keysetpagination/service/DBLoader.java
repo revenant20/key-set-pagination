@@ -47,9 +47,9 @@ public class DBLoader {
                 deal.setText(UUID.randomUUID() + (Math.random() > 0.3 ? UUID.randomUUID().toString() : ""));
                 deal.setType(UUID.randomUUID() + (Math.random() > 0.6 ? UUID.randomUUID().toString() : ""));
                 if (Math.random() > 0.5) {
-                    deal.setDate(LocalDate.now().plusMonths(ThreadLocalRandom.current().nextInt(40)));
+                    deal.setCreatedAt(LocalDate.now().plusMonths(ThreadLocalRandom.current().nextInt(40)));
                 } else {
-                    deal.setDate(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
+                    deal.setCreatedAt(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
                 }
                 list.add(deal);
                 if (list.size() > 1000 || i == arg - 1) {
@@ -79,9 +79,9 @@ public class DBLoader {
                 app.setText(UUID.randomUUID() + (Math.random() > 0.3 ? UUID.randomUUID().toString() : ""));
                 app.setType(UUID.randomUUID() + (Math.random() > 0.6 ? UUID.randomUUID().toString() : ""));
                 if (Math.random() > 0.5) {
-                    app.setDate(LocalDate.now().plusMonths(ThreadLocalRandom.current().nextInt(40)));
+                    app.setCreatedAt(LocalDate.now().plusMonths(ThreadLocalRandom.current().nextInt(40)));
                 } else {
-                    app.setDate(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
+                    app.setCreatedAt(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
                 }
                 list.add(app);
                 if (list.size() > 1000 || i == arg - 1) {

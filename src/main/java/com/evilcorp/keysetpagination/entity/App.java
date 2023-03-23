@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,6 +25,7 @@ public class App implements Ent {
     private String id;
     private String text;
     private String type;
-    private LocalDate date;
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 
 }

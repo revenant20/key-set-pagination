@@ -30,13 +30,13 @@ public abstract class KeySetByFilterWalker<T extends Ent> extends BaseWalker {
         var tuples = new ArrayList<PageLoadDuration>();
         var ent = firstPage.get(firstPage.size() - 1);
         var lastId = ent.getId();
-        var lastDate = ent.getDate();
+        var lastDate = ent.getCreatedAt();
         for (var i = 0; ; i++) {
             var start = now();
             var rows = repository.findAllByFilter(size, lastDate, lastId);
             var end = now();
             lastId = rows.get(rows.size() - 1).getId();
-            lastDate = rows.get(rows.size() - 1).getDate();
+            lastDate = rows.get(rows.size() - 1).getCreatedAt();
             var tuple = new PageLoadDuration();
             tuple.setPage(i);
             tuple.setTime(start.until(end, ChronoUnit.MILLIS));

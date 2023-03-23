@@ -33,7 +33,7 @@ public interface AppRepository extends DataRepository<App, String> {
             select
             *
             from apps
-            order by date, id limit :size"""
+            order by created_at, id limit :size"""
             , nativeQuery = true)
     List<App> findFirstByFilter(int size);
 
@@ -41,9 +41,9 @@ public interface AppRepository extends DataRepository<App, String> {
             select
             *
             from apps
-            where date >= :date
-            and (date > :date or id >= :str)
-            order by date, id
+            where created_at >= :date
+            and (created_at > :date or id >= :str)
+            order by created_at, id
             limit :size"""
             , nativeQuery = true)
     List<App> findAllByFilter(int size, LocalDate date, String str);
@@ -52,18 +52,8 @@ public interface AppRepository extends DataRepository<App, String> {
             select
             *
             from apps
-            where (date >= :date or date is null) and id >= :str
-            order by date, id
-            limit :size"""
-            , nativeQuery = true)
-    List<App> findAllByShortFilter(int size, LocalDate date, String str);
-
-    @Query(value = """
-            select
-            *
-            from apps
-            where (date, id) >= (:date, :str)
-            order by date, id
+            where (created_at, id) >= (:date, :str)
+            order by created_at, id
             limit :size"""
             , nativeQuery = true)
     List<App> findAllByPGShortFilter(int size, LocalDate date, String str);

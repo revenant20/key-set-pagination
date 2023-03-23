@@ -32,7 +32,7 @@ public interface DealRepository extends DataRepository<Deal, String> {
             select
             *
             from deals
-            order by date, id limit :size"""
+            order by created_at, id limit :size"""
             , nativeQuery = true)
     List<Deal> findFirstByFilter(int size);
 
@@ -40,9 +40,9 @@ public interface DealRepository extends DataRepository<Deal, String> {
             select
             *
             from deals
-            where date >= :date
-            and (date > :date or id >= :str)
-            order by date, id
+            where created_at >= :date
+            and (created_at > :date or id >= :str)
+            order by created_at, id
             limit :size"""
             , nativeQuery = true)
     List<Deal> findAllByFilter(int size, LocalDate date, String str);
@@ -51,12 +51,11 @@ public interface DealRepository extends DataRepository<Deal, String> {
             select
             *
             from deals
-            where (date, id) >= (:date, :str)
-            order by date, id
+            where (created_at, id) >= (:date, :str)
+            order by created_at, id
             limit :size"""
             , nativeQuery = true)
     List<Deal> findAllByPGShortFilter(int size, LocalDate date, String str);
-
 
     Page<Deal> findAll(Pageable pageable);
 
