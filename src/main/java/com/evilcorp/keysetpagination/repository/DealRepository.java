@@ -61,4 +61,18 @@ public interface DealRepository extends DataRepository<Deal, String> {
 
     Slice<Deal> findAllBy(Pageable page);
 
+    @Override
+    @Query(value = """
+            select
+                a
+            from
+                Deal a
+            where
+                row_values(a.createdAt, :date, a.id, :str) = true
+            order by
+                a.createdAt,
+                a.id
+            """
+    )
+    List<Deal> findAllByPgShortFilterJpql(LocalDate date, String str, Pageable page);
 }
