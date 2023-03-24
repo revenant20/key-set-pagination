@@ -6,6 +6,7 @@ import com.evilcorp.keysetpagination.entity.Ent;
 import com.evilcorp.keysetpagination.repository.DataRepository;
 import com.evilcorp.keysetpagination.writers.SimpleCsvWriter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -33,7 +34,8 @@ public abstract class KeySetByPGShortFilterWalker<T extends Ent> extends BaseWal
         var lastDate = ent.getCreatedAt();
         for (var i = 0; ; i++) {
             var start = now();
-            var rows = repository.findAllByPGShortFilter(size, lastDate, lastId);
+//            var rows = repository.findAllByPGShortFilter(size, lastDate, lastId);
+            var rows = repository.findAllByPgShortFilterJpql(lastDate, lastId, Pageable.ofSize(size));
             var end = now();
             lastId = rows.get(rows.size() - 1).getId();
             lastDate = rows.get(rows.size() - 1).getCreatedAt();

@@ -57,4 +57,19 @@ public interface AppRepository extends DataRepository<App, String> {
             limit :size"""
             , nativeQuery = true)
     List<App> findAllByPGShortFilter(int size, LocalDate date, String str);
+
+    @Override
+    @Query(value = """
+            select
+                a
+            from
+                App a
+            where
+                row_values(a.createdAt, :date, a.id, :str) = true
+            order by
+                a.createdAt,
+                a.id
+            """
+            )
+    List<App> findAllByPgShortFilterJpql(LocalDate date, String str, Pageable page);
 }
