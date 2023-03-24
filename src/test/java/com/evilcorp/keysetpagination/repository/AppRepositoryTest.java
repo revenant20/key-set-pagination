@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Rollback(value = false)
 @Transactional(propagation = Propagation.NEVER)
 @Slf4j
-class BookRepositoryTest {
+class AppRepositoryTest {
 
     @Autowired
     private AppRepository appRepository;

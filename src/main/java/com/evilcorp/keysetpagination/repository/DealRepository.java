@@ -13,47 +13,74 @@ public interface DealRepository extends DataRepository<Deal, String> {
 
     @Query(value = """
             select
-            *
-            from deals
-            where id >= :id
-            order by id limit :size"""
+                *
+            from
+                deals
+            where
+                id >= :id
+            order by
+                id
+            limit
+                :size
+                """
             , nativeQuery = true)
     List<Deal> findAllKeySet(String id, int size);
 
     @Query(value = """
             select
-            *
-            from deals
-            order by id limit :size"""
+                *
+            from
+                deals
+            order by
+                id
+            limit
+                :size
+                """
             , nativeQuery = true)
     List<Deal> findFirst(int size);
 
     @Query(value = """
             select
-            *
-            from deals
-            order by created_at, id limit :size"""
+                *
+            from
+                deals
+            order by
+                created_at, id
+            limit
+                :size
+                """
             , nativeQuery = true)
     List<Deal> findFirstByFilter(int size);
 
     @Query(value = """
             select
-            *
-            from deals
-            where created_at >= :date
-            and (created_at > :date or id >= :str)
-            order by created_at, id
-            limit :size"""
+                *
+            from
+                deals
+            where
+                created_at >= :date
+            and
+                (created_at > :date or id >= :str)
+            order by
+                created_at, id
+            limit
+                :size
+                """
             , nativeQuery = true)
     List<Deal> findAllByFilter(int size, LocalDate date, String str);
 
     @Query(value = """
             select
-            *
-            from deals
-            where (created_at, id) >= (:date, :str)
-            order by created_at, id
-            limit :size"""
+                *
+            from
+                deals
+            where
+                (created_at, id) >= (:date, :str)
+            order by
+                created_at, id
+            limit
+                :size
+                """
             , nativeQuery = true)
     List<Deal> findAllByPGShortFilter(int size, LocalDate date, String str);
 
