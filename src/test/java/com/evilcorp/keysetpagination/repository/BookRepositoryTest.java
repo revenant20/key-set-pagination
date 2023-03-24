@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
@@ -59,6 +60,47 @@ class BookRepositoryTest {
         var second = secondPage.get(3);
 
         var thirdPage = appRepository.findAllByFilter(4, second.getCreatedAt(), second.getId());
+        assertEquals(3, thirdPage.size());
+        var collect = Stream.of(first,
+                        secondPage,
+                        thirdPage)
+                .flatMap(Collection::stream)
+                .map(App::getId)
+                .collect(Collectors.toSet());
+        assertEquals(9, collect.size());
+    }
+    @Test
+    void testPgFilter() {
+        var first = appRepository.findFirstByFilter(4);
+        assertEquals(4, first.size());
+        var app = first.get(3);
+
+        var secondPage = appRepository.findAllByPGShortFilter(4, app.getCreatedAt(), app.getId());
+        assertEquals(4, secondPage.size());
+        var second = secondPage.get(3);
+
+        var thirdPage = appRepository.findAllByPGShortFilter(4, second.getCreatedAt(), second.getId());
+        assertEquals(3, thirdPage.size());
+        var collect = Stream.of(first,
+                        secondPage,
+                        thirdPage)
+                .flatMap(Collection::stream)
+                .map(App::getId)
+                .collect(Collectors.toSet());
+        assertEquals(9, collect.size());
+    }
+
+    @Test
+    void testPgJpqlFilter() {
+        var first = appRepository.findFirstByFilter(4);
+        assertEquals(4, first.size());
+        var app = first.get(3);
+
+        var secondPage = appRepository.findAllByPgShortFilterJpql(app.getCreatedAt(), app.getId(), Pageable.ofSize(4));
+        assertEquals(4, secondPage.size());
+        var second = secondPage.get(3);
+
+        var thirdPage = appRepository.findAllByPgShortFilterJpql(second.getCreatedAt(), second.getId(), Pageable.ofSize(4));
         assertEquals(3, thirdPage.size());
         var collect = Stream.of(first,
                         secondPage,
