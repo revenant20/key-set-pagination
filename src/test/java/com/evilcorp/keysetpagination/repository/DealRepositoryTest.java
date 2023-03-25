@@ -1,6 +1,5 @@
 package com.evilcorp.keysetpagination.repository;
 
-import com.evilcorp.keysetpagination.entity.App;
 import com.evilcorp.keysetpagination.entity.Deal;
 import com.evilcorp.keysetpagination.testcontainers.TestcontainersInitializer;
 import lombok.extern.slf4j.Slf4j;
@@ -46,84 +45,84 @@ class DealRepositoryTest {
     void setUp() {
         dealRepository.deleteAll();
         dealRepository.saveAll(
-                Stream.generate(this::generateApps)
+                Stream.generate(this::generateDeals)
                         .limit(9).toList()
         );
     }
 
     @Test
     void testFilter() {
-        var first = dealRepository.findFirstByFilter(4);
-        assertEquals(4, first.size());
-        var app = first.get(3);
+        var firstPage = dealRepository.findFirstByFilter(4);
+        assertEquals(4, firstPage.size());
+        var deal = firstPage.get(3);
 
-        var secondPage = dealRepository.findAllByFilter(4, app.getCreatedAt(), app.getId());
+        var secondPage = dealRepository.findAllByFilter(4, deal.getCreatedAt(), deal.getId());
         assertEquals(4, secondPage.size());
-        var second = secondPage.get(3);
+        var secondDeal = secondPage.get(3);
 
-        var thirdPage = dealRepository.findAllByFilter(4, second.getCreatedAt(), second.getId());
+        var thirdPage = dealRepository.findAllByFilter(4, secondDeal.getCreatedAt(), secondDeal.getId());
         assertEquals(3, thirdPage.size());
-        var collect = Stream.of(first,
+        var deals = Stream.of(firstPage,
                         secondPage,
                         thirdPage)
                 .flatMap(Collection::stream)
                 .map(Deal::getId)
                 .collect(Collectors.toSet());
-        assertEquals(9, collect.size());
+        assertEquals(9, deals.size());
     }
     @Test
     void testPgFilter() {
-        var first = dealRepository.findFirstByFilter(4);
-        assertEquals(4, first.size());
-        var app = first.get(3);
+        var firstPage = dealRepository.findFirstByFilter(4);
+        assertEquals(4, firstPage.size());
+        var deal = firstPage.get(3);
 
-        var secondPage = dealRepository.findAllByPGShortFilter(4, app.getCreatedAt(), app.getId());
+        var secondPage = dealRepository.findAllByPGShortFilter(4, deal.getCreatedAt(), deal.getId());
         assertEquals(4, secondPage.size());
-        var second = secondPage.get(3);
+        var secondDeal = secondPage.get(3);
 
-        var thirdPage = dealRepository.findAllByPGShortFilter(4, second.getCreatedAt(), second.getId());
+        var thirdPage = dealRepository.findAllByPGShortFilter(4, secondDeal.getCreatedAt(), secondDeal.getId());
         assertEquals(3, thirdPage.size());
-        var collect = Stream.of(first,
+        var deals = Stream.of(firstPage,
                         secondPage,
                         thirdPage)
                 .flatMap(Collection::stream)
                 .map(Deal::getId)
                 .collect(Collectors.toSet());
-        assertEquals(9, collect.size());
+        assertEquals(9, deals.size());
     }
 
     @Test
     void testPgJpqlFilter() {
-        var first = dealRepository.findFirstByFilter(4);
-        assertEquals(4, first.size());
-        var app = first.get(3);
+        var firstPage = dealRepository.findFirstByFilter(4);
+        assertEquals(4, firstPage.size());
+        var deal = firstPage.get(3);
 
-        var secondPage = dealRepository.findAllByPgShortFilterJpql(app.getCreatedAt(), app.getId(), Pageable.ofSize(4));
+        var secondPage = dealRepository.findAllByPgShortFilterJpql(deal.getCreatedAt(), deal.getId(), Pageable.ofSize(4));
         assertEquals(4, secondPage.size());
-        var second = secondPage.get(3);
+        var secondDeal = secondPage.get(3);
 
-        var thirdPage = dealRepository.findAllByPgShortFilterJpql(second.getCreatedAt(), second.getId(), Pageable.ofSize(4));
+        var thirdPage = dealRepository.findAllByPgShortFilterJpql(secondDeal.getCreatedAt(), secondDeal.getId(), Pageable.ofSize(4));
         assertEquals(3, thirdPage.size());
-        var collect = Stream.of(first,
+        var deals = Stream.of(firstPage,
                         secondPage,
                         thirdPage)
                 .flatMap(Collection::stream)
                 .map(Deal::getId)
                 .collect(Collectors.toSet());
-        assertEquals(9, collect.size());
+        assertEquals(9, deals.size());
     }
 
     @Test
     void testPageFilter() {
-        var first = dealRepository.findAll(PageRequest.of(0, 3)).getContent();
-        assertEquals(3, first.size());
+        var firstPage = dealRepository.findAll(PageRequest.of(0, 3)).getContent();
+        assertEquals(3, firstPage.size());
 
         var secondPage = dealRepository.findAll(PageRequest.of(1, 3)).getContent();
         assertEquals(3, secondPage.size());
 
         var thirdPage = dealRepository.findAll(PageRequest.of(2, 3)).getContent();
         assertEquals(3, thirdPage.size());
-        var collect = Stream.of(first,
+        var collect = Stream.of(firstPage,
                         secondPage,
                         thirdPage)
                 .flatMap(Collection::stream)
@@ -161,13 +160,13 @@ class DealRepositoryTest {
     }
 
     @NotNull
-    private Deal generateApps() {
-        var app = new Deal();
+    private Deal generateDeals() {
+        var deal = new Deal();
         if (Math.random() > 0.5) {
-            app.setCreatedAt(LocalDate.now().plusMonths(ThreadLocalRandom.current().nextInt(40)));
+            deal.setCreatedAt(LocalDate.now().plusMonths(ThreadLocalRandom.current().nextInt(40)));
         } else {
-            app.setCreatedAt(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
+            deal.setCreatedAt(LocalDate.now().minusMonths(ThreadLocalRandom.current().nextInt(40)));
         }
-        return app;
+        return deal;
     }
 }
