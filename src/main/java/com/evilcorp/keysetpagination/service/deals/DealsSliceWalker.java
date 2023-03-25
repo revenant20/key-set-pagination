@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static java.time.LocalDateTime.now;
-
 @Component
 @Slf4j
 public class DealsSliceWalker extends SliceWalker<Deal> {

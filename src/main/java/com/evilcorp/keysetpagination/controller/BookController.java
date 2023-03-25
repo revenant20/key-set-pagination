@@ -1,7 +1,6 @@
 package com.evilcorp.keysetpagination.controller;
 
 import com.evilcorp.keysetpagination.dto.BadRequestException;
-import com.evilcorp.keysetpagination.dto.books.BookDto;
 import com.evilcorp.keysetpagination.dto.books.BookFilter;
 import com.evilcorp.keysetpagination.dto.books.GetBookRequest;
 import com.evilcorp.keysetpagination.dto.books.ListOfBook;
@@ -16,8 +15,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @Slf4j
 @RestController

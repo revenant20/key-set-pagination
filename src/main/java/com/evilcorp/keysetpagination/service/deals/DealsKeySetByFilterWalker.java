@@ -1,7 +1,6 @@
 package com.evilcorp.keysetpagination.service.deals;
 
 import com.evilcorp.keysetpagination.entity.Deal;
-import com.evilcorp.keysetpagination.entity.Ent;
 import com.evilcorp.keysetpagination.repository.DealRepository;
 import com.evilcorp.keysetpagination.service.base.KeySetByFilterWalker;
 import lombok.Getter;

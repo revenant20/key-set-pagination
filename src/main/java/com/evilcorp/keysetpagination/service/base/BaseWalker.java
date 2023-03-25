@@ -1,9 +1,9 @@
 package com.evilcorp.keysetpagination.service.base;
 
 import com.evilcorp.keysetpagination.dto.PageLoadDuration;
+import com.evilcorp.keysetpagination.dto.UploadCommand;
 import com.evilcorp.keysetpagination.service.Walker;
 import com.evilcorp.keysetpagination.writers.SimpleCsvWriter;
-import com.evilcorp.keysetpagination.dto.UploadCommand;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 

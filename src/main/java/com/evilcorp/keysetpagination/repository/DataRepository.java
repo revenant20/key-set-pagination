@@ -1,6 +1,5 @@
 package com.evilcorp.keysetpagination.repository;
 
-import com.evilcorp.keysetpagination.entity.Deal;
 import com.evilcorp.keysetpagination.entity.Ent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
