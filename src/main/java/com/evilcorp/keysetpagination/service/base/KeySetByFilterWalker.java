@@ -6,6 +6,7 @@ import com.evilcorp.keysetpagination.entity.Ent;
 import com.evilcorp.keysetpagination.repository.DataRepository;
 import com.evilcorp.keysetpagination.writers.SimpleCsvWriter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -26,14 +27,14 @@ public abstract class KeySetByFilterWalker<T extends Ent> extends BaseWalker {
         long count = repository.count();
         log.info("В таблице {} записей", count);
         int size = command.getPageSize() + 1;
-        var firstPage = repository.findFirstByFilter(size);
+        var firstPage = repository.findFirstByFilter(Pageable.ofSize(size));
         var tuples = new ArrayList<PageLoadDuration>();
         var ent = firstPage.get(firstPage.size() - 1);
         var lastId = ent.getId();
         var lastDate = ent.getCreatedAt();
         for (var i = 0; ; i++) {
             var start = now();
-            var rows = repository.findAllByFilter(size, lastDate, lastId);
+            var rows = repository.findAllByFilter(Pageable.ofSize(size), lastDate, lastId);
             var end = now();
             lastId = rows.get(rows.size() - 1).getId();
             lastDate = rows.get(rows.size() - 1).getCreatedAt();

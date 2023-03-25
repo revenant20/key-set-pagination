@@ -52,15 +52,15 @@ class AppRepositoryTest {
 
     @Test
     void testFilter() {
-        var first = appRepository.findFirstByFilter(4);
+        var first = appRepository.findFirstByFilter(Pageable.ofSize(4));
         assertEquals(4, first.size());
         var app = first.get(3);
 
-        var secondPage = appRepository.findAllByFilter(4, app.getCreatedAt(), app.getId());
+        var secondPage = appRepository.findAllByFilter(Pageable.ofSize(4), app.getCreatedAt(), app.getId());
         assertEquals(4, secondPage.size());
         var second = secondPage.get(3);
 
-        var thirdPage = appRepository.findAllByFilter(4, second.getCreatedAt(), second.getId());
+        var thirdPage = appRepository.findAllByFilter(Pageable.ofSize(4), second.getCreatedAt(), second.getId());
         assertEquals(3, thirdPage.size());
         var collect = Stream.of(first,
                         secondPage,
@@ -72,7 +72,7 @@ class AppRepositoryTest {
     }
     @Test
     void testPgFilter() {
-        var first = appRepository.findFirstByFilter(4);
+        var first = appRepository.findFirstByFilter(Pageable.ofSize(4));
         assertEquals(4, first.size());
         var app = first.get(3);
 
@@ -93,7 +93,7 @@ class AppRepositoryTest {
 
     @Test
     void testPgJpqlFilter() {
-        var first = appRepository.findFirstByFilter(4);
+        var first = appRepository.findFirstByFilter(Pageable.ofSize(4));
         assertEquals(4, first.size());
         var app = first.get(3);
 

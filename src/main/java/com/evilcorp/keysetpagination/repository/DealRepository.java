@@ -13,61 +13,52 @@ public interface DealRepository extends DataRepository<Deal, String> {
 
     @Query(value = """
             select
-                *
+                d
             from
-                deals
+                Deal d
             where
-                id >= :id
+                d.id >= :id
             order by
-                id
-            limit
-                :size
-                """
-            , nativeQuery = true)
-    List<Deal> findAllKeySet(String id, int size);
+                d.id
+            """
+            )
+    List<Deal> findAllKeySet(String id, Pageable pageable);
 
     @Query(value = """
             select
-                *
+                d
             from
-                deals
+                Deal d
             order by
-                id
-            limit
-                :size
+                d.id
                 """
-            , nativeQuery = true)
-    List<Deal> findFirst(int size);
+            )
+    List<Deal> findFirst(Pageable pageable);
 
     @Query(value = """
             select
-                *
+                d
             from
-                deals
+                Deal d
             order by
-                created_at, id
-            limit
-                :size
+                d.createdAt, d.id
                 """
-            , nativeQuery = true)
-    List<Deal> findFirstByFilter(int size);
+            )
+    List<Deal> findFirstByFilter(Pageable pageable);
 
     @Query(value = """
             select
-                *
+                d
             from
-                deals
+                Deal d
             where
-                created_at >= :date
+                d.createdAt >= :date
             and
-                (created_at > :date or id >= :str)
+                (d.createdAt > :date or d.id >= :str)
             order by
-                created_at, id
-            limit
-                :size
-                """
-            , nativeQuery = true)
-    List<Deal> findAllByFilter(int size, LocalDate date, String str);
+                d.createdAt, d.id
+                """)
+    List<Deal> findAllByFilter(Pageable pageable, LocalDate date, String str);
 
     @Query(value = """
             select

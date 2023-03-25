@@ -27,7 +27,7 @@ public abstract class KeySetByPGShortFilterWalker<T extends Ent> extends BaseWal
         long count = repository.count();
         log.info("В таблице {} записей", count);
         int size = command.getPageSize() + 1;
-        var firstPage = repository.findFirstByFilter(size);
+        var firstPage = repository.findFirstByFilter(Pageable.ofSize(size));
         var tuples = new ArrayList<PageLoadDuration>();
         var ent = firstPage.get(firstPage.size() - 1);
         var lastId = ent.getId();

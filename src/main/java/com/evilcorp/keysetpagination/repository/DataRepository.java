@@ -1,5 +1,6 @@
 package com.evilcorp.keysetpagination.repository;
 
+import com.evilcorp.keysetpagination.entity.Deal;
 import com.evilcorp.keysetpagination.entity.Ent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,17 +14,17 @@ import java.util.List;
 @NoRepositoryBean
 public interface DataRepository<T extends Ent, M> extends CrudRepository<T, M> {
 
-    List<T> findAllKeySet(String id, int size);
+    List<T> findAllKeySet(String id, Pageable pageable);
 
-    List<T> findFirst(int size);
+    List<T> findFirst(Pageable pageable);
 
     Page<T> findAll(Pageable pageable);
 
     Slice<T> findAllBy(Pageable page);
 
-    List<T> findFirstByFilter(int size);
+    List<T> findFirstByFilter(Pageable pageable);
 
-    List<T> findAllByFilter(int size, LocalDate date, String str);
+    List<T> findAllByFilter(Pageable pageable, LocalDate date, String str);
 
     List<T> findAllByPGShortFilter(int size, LocalDate date, String str);
 

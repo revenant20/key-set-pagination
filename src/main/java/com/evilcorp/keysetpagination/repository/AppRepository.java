@@ -1,6 +1,7 @@
 package com.evilcorp.keysetpagination.repository;
 
 import com.evilcorp.keysetpagination.entity.App;
+import com.evilcorp.keysetpagination.entity.Deal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -12,63 +13,51 @@ public interface AppRepository extends DataRepository<App, String> {
 
     @Query(value = """
             select
-                *
+                app
             from
-                apps
+                App app
             where
-                id >= :id
+                app.id >= :id
             order by
-                id
-            limit
-                :size
-                """
-            , nativeQuery = true)
-    List<App> findAllKeySet(String id, int size);
+                app.id
+                """)
+    List<App> findAllKeySet(String id, Pageable pageable);
 
     @Query(value = """
             select
-                *
+                app
             from
-                apps
+                App app
             order by
-                id
-            limit
-                :size
-                """
-            , nativeQuery = true)
-    List<App> findFirst(int size);
+                app.id
+                """)
+    List<App> findFirst(Pageable pageable);
 
     Page<App> findAll(Pageable pageable);
 
     @Query(value = """
             select
-                *
+                app
             from
-                apps
+                App app
             order by
-                created_at, id
-            limit
-                :size
-                """
-            , nativeQuery = true)
-    List<App> findFirstByFilter(int size);
+                app.createdAt, app.id
+                """)
+    List<App> findFirstByFilter(Pageable pageable);
 
     @Query(value = """
             select
-                *
+                app
             from
-                apps
+                App app
             where
-                created_at >= :date
+                app.createdAt >= :date
             and
-                (created_at > :date or id >= :str)
+                (app.createdAt > :date or app.id >= :str)
             order by
-                created_at, id
-            limit
-                :size
-                """
-            , nativeQuery = true)
-    List<App> findAllByFilter(int size, LocalDate date, String str);
+                app.createdAt, app.id
+                """)
+    List<App> findAllByFilter(Pageable pageable, LocalDate date, String str);
 
     @Query(value = """
             select

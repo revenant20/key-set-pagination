@@ -52,15 +52,15 @@ class DealRepositoryTest {
 
     @Test
     void testFilter() {
-        var firstPage = dealRepository.findFirstByFilter(4);
+        var firstPage = dealRepository.findFirstByFilter(Pageable.ofSize(4));
         assertEquals(4, firstPage.size());
         var deal = firstPage.get(3);
 
-        var secondPage = dealRepository.findAllByFilter(4, deal.getCreatedAt(), deal.getId());
+        var secondPage = dealRepository.findAllByFilter(Pageable.ofSize(4), deal.getCreatedAt(), deal.getId());
         assertEquals(4, secondPage.size());
         var secondDeal = secondPage.get(3);
 
-        var thirdPage = dealRepository.findAllByFilter(4, secondDeal.getCreatedAt(), secondDeal.getId());
+        var thirdPage = dealRepository.findAllByFilter(Pageable.ofSize(4), secondDeal.getCreatedAt(), secondDeal.getId());
         assertEquals(3, thirdPage.size());
         var deals = Stream.of(firstPage,
                         secondPage,
@@ -72,7 +72,7 @@ class DealRepositoryTest {
     }
     @Test
     void testPgFilter() {
-        var firstPage = dealRepository.findFirstByFilter(4);
+        var firstPage = dealRepository.findFirstByFilter(Pageable.ofSize(4));
         assertEquals(4, firstPage.size());
         var deal = firstPage.get(3);
 
@@ -93,7 +93,7 @@ class DealRepositoryTest {
 
     @Test
     void testPgJpqlFilter() {
-        var firstPage = dealRepository.findFirstByFilter(4);
+        var firstPage = dealRepository.findFirstByFilter(Pageable.ofSize(4));
         assertEquals(4, firstPage.size());
         var deal = firstPage.get(3);
 
