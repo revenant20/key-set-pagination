@@ -1,4 +1,7 @@
 package com.evilcorp.keysetpagination.dto.books;
 
-public record BookFilter(int limit, int offset) {
+import lombok.Builder;
+
+@Builder
+public record BookFilter(int limit, String id, Integer rating) {
 }

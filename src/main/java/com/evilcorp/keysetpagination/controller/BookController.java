@@ -5,7 +5,6 @@ import com.evilcorp.keysetpagination.dto.books.BookFilter;
 import com.evilcorp.keysetpagination.dto.books.GetBookRequest;
 import com.evilcorp.keysetpagination.dto.books.ListOfBook;
 import com.evilcorp.keysetpagination.dto.books.NextBookPage;
-import com.evilcorp.keysetpagination.dto.books.Sorting;
 import com.evilcorp.keysetpagination.service.BookService;
 import com.evilcorp.keysetpagination.service.EncryptionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,32 +22,34 @@ public record BookController(BookService bookService, EncryptionService encrypti
     @SneakyThrows
     @PostMapping
     public ListOfBook books(@RequestBody GetBookRequest request) {
-        Sorting sorting;
         final BookFilter filter;
         if (StringUtils.isNotBlank(request.token())) {
             var nextPage = encryptionService.decode(request.token());
-            sorting = nextPage.sorting();
             filter = nextPage.filter();
         } else {
-            sorting = request.sorting();
             filter = request.filter();
         }
-        if (sorting == null || filter == null) {
+        if (filter == null) {
             throw new BadRequestException();
         }
-        var books = bookService.getBooksByFilter(filter, sorting);
+        var books = bookService.getBooksByFilter(filter);
         String newToken;
-        if (books.size() == filter.limit()) {
+        if (books.size() == filter.limit()+1) {
+            var lastBook = books.get(books.size() - 1);
             newToken = encryptionService.encode(NextBookPage.builder()
-                    .sorting(sorting)
-                    .filter(new BookFilter(filter.limit(), filter.offset() + 1))
+                    .filter(
+                            BookFilter.builder()
+                                    .id(lastBook.id())
+                                    .limit(filter.limit())
+                                    .rating(lastBook.rating())
+                                    .build())
                     .build()
             );
         } else {
             newToken = null;
         }
         return ListOfBook.builder()
-                .books(books)
+                .books(books.stream().limit(filter.limit()).toList())
                 .token(newToken)
                 .build();
     }
