@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
@@ -152,6 +153,29 @@ class AppRepositoryTest {
         assertEquals(9, collect.size());
         var nonExistPage = appRepository.findAllBy(PageRequest.of(3, 3)).getContent();
         assertEquals(0, nonExistPage.size());
+    }
+
+    @Test
+    void testReversPageLoading() {
+        int pageSize = 3;
+        long count = appRepository.count();
+        var half = (count / pageSize) / 2;
+        System.out.println("half = " + half);
+        var first = appRepository.findAll(PageRequest.of(0, pageSize, Sort.Direction.ASC, "id")).getContent();
+
+        var secondPage = appRepository.findAll(PageRequest.of(1, pageSize, Sort.Direction.DESC, "id")).getContent();
+        assertEquals(3, secondPage.size());
+
+        var thirdPage = appRepository.findAll(PageRequest.of(0, pageSize, Sort.Direction.DESC, "id")).getContent();
+        assertEquals(3, thirdPage.size());
+
+        var collect = Stream.of(first,
+                        secondPage,
+                        thirdPage)
+                .flatMap(Collection::stream)
+                .map(App::getId)
+                .collect(Collectors.toSet());
+        assertEquals(9, collect.size());
     }
 
     @AfterEach
