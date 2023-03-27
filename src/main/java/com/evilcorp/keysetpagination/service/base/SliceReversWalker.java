@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import static java.time.LocalDateTime.now;
 
 @Slf4j
-public abstract class PageReversWalker<T extends Ent> extends BaseWalker {
+public abstract class SliceReversWalker<T extends Ent> extends BaseWalker {
 
     private final DataRepository<T, String> repository;
 
-    public PageReversWalker(DataRepository<T, String> repository) {
+    public SliceReversWalker(DataRepository<T, String> repository) {
         this.repository = repository;
     }
 
@@ -48,7 +48,7 @@ public abstract class PageReversWalker<T extends Ent> extends BaseWalker {
         int page = 0;
         for (var i = 0; i < halfPages; i++) {
             start = now();
-            repository.findAll(PageRequest.of(i, command.getPageSize(), Sort.Direction.ASC, "id"));
+            repository.findAllBy(PageRequest.of(i, command.getPageSize(), Sort.Direction.ASC, "id"));
             end = now();
             tuple = new PageLoadDuration();
             tuple.setPage(page);
@@ -65,7 +65,7 @@ public abstract class PageReversWalker<T extends Ent> extends BaseWalker {
         }
         for (var i = totalPages - halfPages - 1; i >= 0; i--) {
             start = now();
-            repository.findAll(PageRequest.of(i, command.getPageSize(), Sort.Direction.DESC, "id"));
+            repository.findAllBy(PageRequest.of(i, command.getPageSize(), Sort.Direction.DESC, "id"));
             end = now();
             tuple = new PageLoadDuration();
             tuple.setPage(page);

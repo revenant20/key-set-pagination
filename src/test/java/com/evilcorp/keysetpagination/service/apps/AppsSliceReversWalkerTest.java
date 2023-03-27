@@ -45,13 +45,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Rollback(value = false)
 @Transactional(propagation = Propagation.NEVER)
 @Slf4j
-class AppsPageReversWalkerTest {
-
+class AppsSliceReversWalkerTest {
     @Autowired
     AppRepository appRepository;
 
     @Autowired
-    AppsPageReversWalker appsPageReversWalker;
+    AppsSliceReversWalker appsSliceReversWalker;
 
     @BeforeEach
     void setUp() {
@@ -66,8 +65,8 @@ class AppsPageReversWalkerTest {
     @ParameterizedTest
     @SneakyThrows
     void test(int pageSize, int result) {
-        appsPageReversWalker.walk(UploadCommand.builder().pageSize(pageSize).build());
-        List<PageLoadDuration> beans = beanBuilderExample(new File("apps_count_page_reverse.csv").toPath(), PageLoadDuration.class);
+        appsSliceReversWalker.walk(UploadCommand.builder().pageSize(pageSize).build());
+        List<PageLoadDuration> beans = beanBuilderExample(new File("apps_count_slice_reverse.csv").toPath(), PageLoadDuration.class);
         assertEquals(result, beans.size());
     }
 
@@ -89,12 +88,10 @@ class AppsPageReversWalkerTest {
 
     @SneakyThrows
     public <CsvBean> List<CsvBean> beanBuilderExample(Path path, Class clazz) {
-
         try (Reader reader = Files.newBufferedReader(path)) {
             CsvToBean<CsvBean> cb = new CsvToBeanBuilder<CsvBean>(reader)
                     .withType(clazz)
                     .build();
-
             return cb.parse();
         }
     }
@@ -103,8 +100,9 @@ class AppsPageReversWalkerTest {
         return Stream.of(
                 Arguments.arguments(2, 5),
                 Arguments.arguments(3, 3),
-                Arguments.arguments(4, 3),
-                Arguments.arguments(5, 2)
-        );
+                Arguments.arguments(5, 2),
+                Arguments.arguments(4, 3)
+                );
     }
+
 }
