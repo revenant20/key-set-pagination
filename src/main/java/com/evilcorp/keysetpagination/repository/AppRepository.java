@@ -50,13 +50,13 @@ public interface AppRepository extends DataRepository<App, String> {
             from
                 App app
             where
-                app.createdAt >= :date
+                app.createdAt >= :createdAt
             and
-                (app.createdAt > :date or app.id >= :str)
+                (app.createdAt > :createdAt or app.id >= :id)
             order by
                 app.createdAt, app.id
                 """)
-    List<App> findAllByFilter(Pageable pageable, LocalDate date, String str);
+    List<App> findAllByFilter(Pageable pageable, LocalDate createdAt, String id);
 
     @Query(value = """
             select
@@ -64,14 +64,14 @@ public interface AppRepository extends DataRepository<App, String> {
             from
                 apps
             where
-                (created_at, id) >= (:date, :str)
+                (created_at, id) >= (:createdAt, :id)
             order by
                 created_at, id
             limit
                 :size
                 """
             , nativeQuery = true)
-    List<App> findAllByPGShortFilter(int size, LocalDate date, String str);
+    List<App> findAllByPGShortFilter(int size, LocalDate createdAt, String id);
 
     @Override
     @Query(value = """
@@ -80,11 +80,11 @@ public interface AppRepository extends DataRepository<App, String> {
             from
                 App a
             where
-                row_values(a.createdAt, :date, a.id, :str) = true
+                row_values(a.createdAt, :createdAt, a.id, :id) = true
             order by
                 a.createdAt,
                 a.id
             """
             )
-    List<App> findAllByPgShortFilterJpql(LocalDate date, String str, Pageable page);
+    List<App> findAllByPgShortFilterJpql(LocalDate createdAt, String id, Pageable page);
 }

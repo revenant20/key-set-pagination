@@ -52,13 +52,13 @@ public interface DealRepository extends DataRepository<Deal, String> {
             from
                 Deal d
             where
-                d.createdAt >= :date
+                d.createdAt >= :createdAt
             and
-                (d.createdAt > :date or d.id >= :str)
+                (d.createdAt > :createdAt or d.id >= :id)
             order by
                 d.createdAt, d.id
                 """)
-    List<Deal> findAllByFilter(Pageable pageable, LocalDate date, String str);
+    List<Deal> findAllByFilter(Pageable pageable, LocalDate createdAt, String id);
 
     @Query(value = """
             select
@@ -66,14 +66,14 @@ public interface DealRepository extends DataRepository<Deal, String> {
             from
                 deals
             where
-                (created_at, id) >= (:date, :str)
+                (created_at, id) >= (:createdAt, :id)
             order by
                 created_at, id
             limit
                 :size
                 """
             , nativeQuery = true)
-    List<Deal> findAllByPGShortFilter(int size, LocalDate date, String str);
+    List<Deal> findAllByPGShortFilter(int size, LocalDate createdAt, String id);
 
     Page<Deal> findAll(Pageable pageable);
 
@@ -86,11 +86,11 @@ public interface DealRepository extends DataRepository<Deal, String> {
             from
                 Deal a
             where
-                row_values(a.createdAt, :date, a.id, :str) = true
+                row_values(a.createdAt, :createdAt, a.id, :id) = true
             order by
                 a.createdAt,
                 a.id
             """
     )
-    List<Deal> findAllByPgShortFilterJpql(LocalDate date, String str, Pageable page);
+    List<Deal> findAllByPgShortFilterJpql(LocalDate createdAt, String id, Pageable page);
 }
