@@ -86,5 +86,5 @@ public interface AppRepository extends DataRepository<App, String> {
                 a.id
             """
             )
-    List<App> findAllByPgShortFilterJpql(LocalDate createdAt, String id, Pageable page);
+    List<App> findAllByPGShortFilterJpql(LocalDate createdAt, String id, Pageable page);
 }

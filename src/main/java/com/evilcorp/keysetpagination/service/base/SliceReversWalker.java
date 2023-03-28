@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import static java.time.LocalDateTime.now;
@@ -29,7 +28,6 @@ public abstract class SliceReversWalker<T extends Ent> extends BaseWalker {
         LocalDateTime start;
         LocalDateTime end;
         var tuples = new ArrayList<PageLoadDuration>();
-        var tuple = new PageLoadDuration();
         int count = (int) repository.count();
         int moduloOfTotalPages = count % command.getPageSize();
         final int totalPages;
@@ -50,10 +48,7 @@ public abstract class SliceReversWalker<T extends Ent> extends BaseWalker {
             start = now();
             repository.findAllBy(PageRequest.of(i, command.getPageSize(), Sort.Direction.ASC, "id"));
             end = now();
-            tuple = new PageLoadDuration();
-            tuple.setPage(page);
-            tuple.setTime(start.until(end, ChronoUnit.MILLIS));
-            tuples.add(tuple);
+            updateCsvDataset(tuples, page, start, end);
             page++;
             if (i % 100 == 0) {
                 log.info("выгрузил страницу номер {} из {}", i, totalPages);
@@ -67,10 +62,7 @@ public abstract class SliceReversWalker<T extends Ent> extends BaseWalker {
             start = now();
             repository.findAllBy(PageRequest.of(i, command.getPageSize(), Sort.Direction.DESC, "id"));
             end = now();
-            tuple = new PageLoadDuration();
-            tuple.setPage(page);
-            tuple.setTime(start.until(end, ChronoUnit.MILLIS));
-            tuples.add(tuple);
+            updateCsvDataset(tuples, page, start, end);
             page++;
             if (i % 100 == 0) {
                 log.info("выгрузил страницу номер {} из {}", i, totalPages);

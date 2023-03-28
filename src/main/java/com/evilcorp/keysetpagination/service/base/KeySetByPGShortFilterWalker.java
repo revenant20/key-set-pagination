@@ -8,7 +8,6 @@ import com.evilcorp.keysetpagination.writers.SimpleCsvWriter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import static java.time.LocalDateTime.now;
@@ -27,22 +26,21 @@ public abstract class KeySetByPGShortFilterWalker<T extends Ent> extends BaseWal
         long count = repository.count();
         log.info("В таблице {} записей", count);
         int size = command.getPageSize() + 1;
+        var start = now();
         var firstPage = repository.findFirstByFilter(Pageable.ofSize(size));
+        var end = now();
         var tuples = new ArrayList<PageLoadDuration>();
+        updateCsvDataset(tuples, 0, start, end);
         var ent = firstPage.get(firstPage.size() - 1);
         var lastId = ent.getId();
         var lastDate = ent.getCreatedAt();
         for (var i = 0; ; i++) {
-            var start = now();
-//            var rows = repository.findAllByPGShortFilter(size, lastDate, lastId);
-            var rows = repository.findAllByPgShortFilterJpql(lastDate, lastId, Pageable.ofSize(size));
-            var end = now();
+            start = now();
+            var rows = repository.findAllByPGShortFilterJpql(lastDate, lastId, Pageable.ofSize(size));
+            end = now();
             lastId = rows.get(rows.size() - 1).getId();
             lastDate = rows.get(rows.size() - 1).getCreatedAt();
-            var tuple = new PageLoadDuration();
-            tuple.setPage(i);
-            tuple.setTime(start.until(end, ChronoUnit.MILLIS));
-            tuples.add(tuple);
+            updateCsvDataset(tuples, i, start, end);
             if (tuples.size() >= 100) {
                 writer.writeToCsv(tuples);
                 tuples.clear();

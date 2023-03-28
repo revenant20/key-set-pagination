@@ -56,7 +56,7 @@ public interface DealRepository extends DataRepository<Deal, String> {
             and
                 (d.createdAt > :createdAt or d.id >= :id)
             order by
-                d.createdAt, d.id
+                d.createdAt ASC, d.id DESC
                 """)
     List<Deal> findAllByFilter(Pageable pageable, LocalDate createdAt, String id);
 
@@ -92,5 +92,5 @@ public interface DealRepository extends DataRepository<Deal, String> {
                 a.id
             """
     )
-    List<Deal> findAllByPgShortFilterJpql(LocalDate createdAt, String id, Pageable page);
+    List<Deal> findAllByPGShortFilterJpql(LocalDate createdAt, String id, Pageable page);
 }

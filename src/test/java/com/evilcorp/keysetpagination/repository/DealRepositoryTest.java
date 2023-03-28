@@ -97,11 +97,11 @@ class DealRepositoryTest {
         assertEquals(4, firstPage.size());
         var deal = firstPage.get(3);
 
-        var secondPage = dealRepository.findAllByPgShortFilterJpql(deal.getCreatedAt(), deal.getId(), Pageable.ofSize(4));
+        var secondPage = dealRepository.findAllByPGShortFilterJpql(deal.getCreatedAt(), deal.getId(), Pageable.ofSize(4));
         assertEquals(4, secondPage.size());
         var secondDeal = secondPage.get(3);
 
-        var thirdPage = dealRepository.findAllByPgShortFilterJpql(secondDeal.getCreatedAt(), secondDeal.getId(), Pageable.ofSize(4));
+        var thirdPage = dealRepository.findAllByPGShortFilterJpql(secondDeal.getCreatedAt(), secondDeal.getId(), Pageable.ofSize(4));
         assertEquals(3, thirdPage.size());
         var deals = Stream.of(firstPage,
                         secondPage,

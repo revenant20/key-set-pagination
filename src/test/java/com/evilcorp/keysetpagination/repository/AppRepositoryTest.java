@@ -98,11 +98,11 @@ class AppRepositoryTest {
         assertEquals(4, first.size());
         var app = first.get(3);
 
-        var secondPage = appRepository.findAllByPgShortFilterJpql(app.getCreatedAt(), app.getId(), Pageable.ofSize(4));
+        var secondPage = appRepository.findAllByPGShortFilterJpql(app.getCreatedAt(), app.getId(), Pageable.ofSize(4));
         assertEquals(4, secondPage.size());
         var second = secondPage.get(3);
 
-        var thirdPage = appRepository.findAllByPgShortFilterJpql(second.getCreatedAt(), second.getId(), Pageable.ofSize(4));
+        var thirdPage = appRepository.findAllByPGShortFilterJpql(second.getCreatedAt(), second.getId(), Pageable.ofSize(4));
         assertEquals(3, thirdPage.size());
         var collect = Stream.of(first,
                         secondPage,
