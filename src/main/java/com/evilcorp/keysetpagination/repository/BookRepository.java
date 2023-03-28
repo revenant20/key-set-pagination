@@ -10,7 +10,8 @@ import org.springframework.data.repository.CrudRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface BookRepository extends CrudRepository<Book, String> {
+public interface BookRepository
+        extends CrudRepository<Book, String> {
 
     Page<Book> findAll(Pageable pageable);
 
