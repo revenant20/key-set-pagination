@@ -32,7 +32,7 @@ public interface BookRepository extends CrudRepository<Book, String> {
         where
             b.rating >= :rating
         and
-            (b.rating > :rating or b.id >= :str)
+            (b.rating > :rating or b.id >= :id)
         order by
             b.rating, b.id
     """)
