@@ -48,4 +48,9 @@
             <column name="id"/>
         </createIndex>
     </changeSet>
+    <changeSet id="5" author="sazonovfm">
+        <addColumn tableName="books">
+            <column name="created_at" type="date"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

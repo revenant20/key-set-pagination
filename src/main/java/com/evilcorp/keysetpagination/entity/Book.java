@@ -5,10 +5,12 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "books")
@@ -22,4 +24,6 @@ public class Book {
     private String id;
     private String description;
     private Integer rating;
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 }
