@@ -23,9 +23,14 @@ public interface DataRepository<T extends Ent, M> extends CrudRepository<T, M> {
 
     List<T> findFirstByFilter(Pageable pageable);
 
+    List<T> findFirstByFilterWithReversFilter(Pageable pageable);
+
     List<T> findAllByFilter(Pageable pageable, LocalDate createdAt, String id);
+    List<T> findAllByFilterWithReverseOrder(Pageable pageable, LocalDate createdAt, String id);
 
     List<T> findAllBySimpleFilter(Pageable pageable, LocalDate createdAt, String id);
+
+    List<T> findAllBySimpleFilterWithReverseOrder(Pageable pageable, LocalDate createdAt, String id);
 
     List<T> findAllByPGShortFilter(int size, LocalDate createdAt, String id);
 

@@ -51,14 +51,39 @@ public interface DealRepository extends DataRepository<Deal, String> {
                 d
             from
                 Deal d
+            order by
+                d.createdAt DESC , d.id DESC
+                """
+            )
+    List<Deal> findFirstByFilterWithReversFilter(Pageable pageable);
+
+    @Query(value = """
+            select
+                d
+            from
+                Deal d
             where
                 d.createdAt >= :createdAt
             and
                 (d.createdAt > :createdAt or d.id >= :id)
             order by
-                d.createdAt ASC, d.id DESC
+                d.createdAt, d.id
                 """)
     List<Deal> findAllByFilter(Pageable pageable, LocalDate createdAt, String id);
+
+    @Query(value = """
+            select
+                d
+            from
+                Deal d
+            where
+                d.createdAt <= :createdAt
+            and
+                (d.createdAt < :createdAt or d.id <= :id)
+            order by
+                d.createdAt DESC, d.id DESC
+                """)
+    List<Deal> findAllByFilterWithReverseOrder(Pageable pageable, LocalDate createdAt, String id);
 
     @Query(value = """
             select
@@ -73,6 +98,20 @@ public interface DealRepository extends DataRepository<Deal, String> {
                 d.createdAt, d.id
                 """)
     List<Deal> findAllBySimpleFilter(Pageable pageable, LocalDate createdAt, String id);
+
+    @Query(value = """
+            select
+                d
+            from
+                Deal d
+            where
+                d.createdAt < :createdAt
+            or
+                (d.createdAt = :createdAt and d.id <= :id)
+            order by
+                d.createdAt DESC , d.id DESC
+                """)
+    List<Deal> findAllBySimpleFilterWithReverseOrder(Pageable pageable, LocalDate createdAt, String id);
 
     @Query(value = """
             select

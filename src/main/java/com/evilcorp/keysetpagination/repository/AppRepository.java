@@ -49,6 +49,16 @@ public interface AppRepository extends DataRepository<App, String> {
                 app
             from
                 App app
+            order by
+                app.createdAt DESC, app.id DESC
+                """)
+    List<App> findFirstByFilterWithReversFilter(Pageable pageable);
+
+    @Query(value = """
+            select
+                app
+            from
+                App app
             where
                 app.createdAt >= :createdAt
             and
@@ -64,6 +74,20 @@ public interface AppRepository extends DataRepository<App, String> {
             from
                 App app
             where
+                app.createdAt <= :createdAt
+            and
+                (app.createdAt < :createdAt or app.id <= :id)
+            order by
+                app.createdAt DESC, app.id DESC
+                """)
+    List<App> findAllByFilterWithReverseOrder(Pageable pageable, LocalDate createdAt, String id);
+
+    @Query(value = """
+            select
+                app
+            from
+                App app
+            where
                 app.createdAt > :createdAt
             or
                 (app.createdAt = :createdAt and app.id >= :id)
@@ -71,6 +95,20 @@ public interface AppRepository extends DataRepository<App, String> {
                 app.createdAt, app.id
                 """)
     List<App> findAllBySimpleFilter(Pageable pageable, LocalDate createdAt, String id);
+
+    @Query(value = """
+            select
+                app
+            from
+                App app
+            where
+                app.createdAt < :createdAt
+            or
+                (app.createdAt = :createdAt and app.id <= :id)
+            order by
+                app.createdAt DESC, app.id DESC
+                """)
+    List<App> findAllBySimpleFilterWithReverseOrder(Pageable pageable, LocalDate createdAt, String id);
 
     @Query(value = """
             select
