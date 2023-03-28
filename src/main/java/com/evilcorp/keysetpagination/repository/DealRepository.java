@@ -62,6 +62,20 @@ public interface DealRepository extends DataRepository<Deal, String> {
 
     @Query(value = """
             select
+                d
+            from
+                Deal d
+            where
+                d.createdAt > :createdAt
+            or
+                (d.createdAt = :createdAt and d.id >= :id)
+            order by
+                d.createdAt, d.id
+                """)
+    List<Deal> findAllBySimpleFilter(Pageable pageable, LocalDate createdAt, String id);
+
+    @Query(value = """
+            select
                 *
             from
                 deals

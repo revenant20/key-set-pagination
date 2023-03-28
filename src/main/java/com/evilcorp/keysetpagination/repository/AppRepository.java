@@ -60,6 +60,20 @@ public interface AppRepository extends DataRepository<App, String> {
 
     @Query(value = """
             select
+                app
+            from
+                App app
+            where
+                app.createdAt > :createdAt
+            or
+                (app.createdAt = :createdAt and app.id >= :id)
+            order by
+                app.createdAt, app.id
+                """)
+    List<App> findAllBySimpleFilter(Pageable pageable, LocalDate createdAt, String id);
+
+    @Query(value = """
+            select
                 *
             from
                 apps

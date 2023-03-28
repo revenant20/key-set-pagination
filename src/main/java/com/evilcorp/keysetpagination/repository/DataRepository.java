@@ -25,6 +25,8 @@ public interface DataRepository<T extends Ent, M> extends CrudRepository<T, M> {
 
     List<T> findAllByFilter(Pageable pageable, LocalDate createdAt, String id);
 
+    List<T> findAllBySimpleFilter(Pageable pageable, LocalDate createdAt, String id);
+
     List<T> findAllByPGShortFilter(int size, LocalDate createdAt, String id);
 
     List<T> findAllByPGShortFilterJpql(LocalDate createdAt, String id, Pageable page);
