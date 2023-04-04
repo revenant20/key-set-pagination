@@ -15,7 +15,7 @@ public class AppsPageWalker extends PageWalker<App> {
     private final String path = "./apps_count_page.csv";
 
     @Getter
-    private final String name = "pege ASC";
+    private final String name = "page ASC";
 
     public AppsPageWalker(AppRepository repository) {
         super(repository);

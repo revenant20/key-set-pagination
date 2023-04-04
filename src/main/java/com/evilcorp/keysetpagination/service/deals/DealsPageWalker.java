@@ -15,7 +15,7 @@ public class DealsPageWalker extends PageWalker<Deal> {
     private final String path = "./deals_count_page.csv";
 
     @Getter
-    private final String name = "pege ASC";
+    private final String name = "page ASC";
 
     public DealsPageWalker(DealRepository repository) {
         super(repository);
