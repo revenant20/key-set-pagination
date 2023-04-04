@@ -14,6 +14,9 @@ public class AppsKeySetWalker extends KeySetWalker<App> {
     @Getter
     private final String path = "./apps_count_keyset.csv";
 
+    @Getter
+    private final String name = "keyset по id";
+
     public AppsKeySetWalker(AppRepository repository) {
         super(repository);
     }

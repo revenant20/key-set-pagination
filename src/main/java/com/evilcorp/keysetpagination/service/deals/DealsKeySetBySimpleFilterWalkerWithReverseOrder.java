@@ -11,6 +11,9 @@ public class DealsKeySetBySimpleFilterWalkerWithReverseOrder extends KeySetBySim
     @Getter
     private final String path = "./deals_count_keyset_by_simple_filter_with_reverse_order.csv";
 
+    @Getter
+    private final String name = "keyset очевидный DESC (no index)";
+
     public DealsKeySetBySimpleFilterWalkerWithReverseOrder(DealRepository repository) {
         super(repository);
     }

@@ -14,6 +14,9 @@ public class DealsSliceWalker extends SliceWalker<Deal> {
     @Getter
     private final String path = "./deals_count_slice.csv";
 
+    @Getter
+    private final String name = "slice ASC";
+
     public DealsSliceWalker(DealRepository repository) {
         super(repository);
     }

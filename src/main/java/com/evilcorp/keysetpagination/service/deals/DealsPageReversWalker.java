@@ -12,6 +12,9 @@ public class DealsPageReversWalker extends PageReversWalker<App> {
     @Getter
     private final String path = "./deals_count_page_reverse.csv";
 
+    @Getter
+    private final String name = "page ASC/DESC";
+
     public DealsPageReversWalker(AppRepository repository) {
         super(repository);
     }

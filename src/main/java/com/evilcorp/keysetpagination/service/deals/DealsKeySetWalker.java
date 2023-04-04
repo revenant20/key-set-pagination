@@ -14,6 +14,9 @@ public class DealsKeySetWalker extends KeySetWalker<Deal> {
     @Getter
     private final String path = "./deals_count_keyset.csv";
 
+    @Getter
+    private final String name = "keyset по id";
+
     public DealsKeySetWalker(DealRepository repository) {
         super(repository);
     }

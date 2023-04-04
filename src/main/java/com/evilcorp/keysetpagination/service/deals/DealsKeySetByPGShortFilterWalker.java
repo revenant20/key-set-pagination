@@ -11,6 +11,9 @@ public class DealsKeySetByPGShortFilterWalker extends KeySetByPGShortFilterWalke
     @Getter
     private final String path = "./deals_count_keyset_by_PG_short_filter.csv";
 
+    @Getter
+    private final String name = "keyset по PG (no index)";
+
     public DealsKeySetByPGShortFilterWalker(DealRepository repository) {
         super(repository);
     }

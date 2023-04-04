@@ -11,6 +11,8 @@ public class AppsSliceReversWalker extends SliceReversWalker<App> {
 
     @Getter
     private final String path = "./apps_count_slice_reverse.csv";
+    @Getter
+    private final String name = "slice ASC/DESC";
 
     public AppsSliceReversWalker(AppRepository repository) {
         super(repository);

@@ -11,6 +11,9 @@ public class AppsKeySetByFilterWalker extends KeySetByFilterWalker<App> {
     @Getter
     private final String path = "./apps_count_by_filter.csv";
 
+    @Getter
+    private final String name = "keyset нормальный (index)";
+
     public AppsKeySetByFilterWalker(AppRepository repository) {
         super(repository);
     }

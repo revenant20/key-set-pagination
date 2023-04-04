@@ -15,8 +15,6 @@ import java.util.ArrayList;
 @Slf4j
 public abstract class BaseWalker implements Walker {
 
-    protected abstract String getPath();
-
     @SneakyThrows
     @Override
     public void walk(UploadCommand command) {

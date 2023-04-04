@@ -11,6 +11,9 @@ public class AppsKeySetByPGShortFilterWalker extends KeySetByPGShortFilterWalker
     @Getter
     private final String path = "./apps_count_by_PG_short_filter.csv";
 
+    @Getter
+    private final String name = "keyset по PG (index)";
+
     public AppsKeySetByPGShortFilterWalker(AppRepository repository) {
         super(repository);
     }

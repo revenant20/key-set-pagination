@@ -11,6 +11,9 @@ public class AppsKeySetBySimpleFilterWalkerWithReverseOrder extends KeySetBySimp
     @Getter
     private final String path = "./apps_count_by_simple_filter_with_revers_order.csv";
 
+    @Getter
+    private final String name = "keyset очевидный DESC (index)";
+
     public AppsKeySetBySimpleFilterWalkerWithReverseOrder(AppRepository repository) {
         super(repository);
     }

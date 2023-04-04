@@ -14,6 +14,9 @@ public class AppsSliceWalker extends SliceWalker<App> {
     @Getter
     private final String path = "./apps_count_slice.csv";
 
+    @Getter
+    private final String name = "slice ASC";
+
     public AppsSliceWalker(AppRepository repository) {
         super(repository);
     }

@@ -12,6 +12,9 @@ public class DealsSliceReversWalker extends SliceReversWalker<Deal> {
     @Getter
     private final String path = "./deals_count_slice_reverse.csv";
 
+    @Getter
+    private final String name = "slice ASC/DESC";
+
     public DealsSliceReversWalker(DealRepository repository) {
         super(repository);
     }

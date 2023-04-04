@@ -11,6 +11,9 @@ public class DealsKeySetBySimpleFilterWalker extends KeySetBySimpleFilterWalker<
     @Getter
     private final String path = "./deals_count_keyset_by_simple_filter.csv";
 
+    @Getter
+    private final String name = "keyset очевидный (no index)";
+
     public DealsKeySetBySimpleFilterWalker(DealRepository repository) {
         super(repository);
     }

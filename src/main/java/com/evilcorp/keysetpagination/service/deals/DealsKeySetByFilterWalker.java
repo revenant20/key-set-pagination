@@ -11,6 +11,9 @@ public class DealsKeySetByFilterWalker extends KeySetByFilterWalker<Deal> {
     @Getter
     private final String path = "./deals_count_keyset_by_filter.csv";
 
+    @Getter
+    private final String name = "keyset нормальный (no index)";
+
     public DealsKeySetByFilterWalker(DealRepository repository) {
         super(repository);
     }
