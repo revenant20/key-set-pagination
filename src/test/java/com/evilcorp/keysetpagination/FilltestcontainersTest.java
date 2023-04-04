@@ -103,7 +103,7 @@ public class FilltestcontainersTest {
                 .setLegendVisible(false)
                 .setShowWithinAreaPoint(true);
         styler
-                .setPlotGridVerticalLinesVisible(false).;
+                .setPlotGridVerticalLinesVisible(false);
 
 
         BitmapEncoder.saveBitmapWithDPI(chart, walker.getPath(), BitmapEncoder.BitmapFormat.PNG, 500);
