@@ -101,7 +101,8 @@ public class FilltestcontainersTest {
                 .setChartTitleBoxVisible(false)
                 .setPlotBorderVisible(false)
                 .setLegendVisible(false)
-                .setShowWithinAreaPoint(true);
+                .setShowWithinAreaPoint(true)
+                .setMarkerSize(0);
         styler
                 .setPlotGridVerticalLinesVisible(false);
 
