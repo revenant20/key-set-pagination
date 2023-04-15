@@ -7,18 +7,17 @@ import com.evilcorp.keysetpagination.repository.DataRepository;
 import com.evilcorp.keysetpagination.writers.SimpleCsvWriter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 
 import static java.time.LocalDateTime.now;
 
 @Slf4j
-public abstract class SliceWalker<T extends Ent> extends BaseWalker {
+public abstract class SliceWalkerWithoutOrderBy<T extends Ent> extends BaseWalker {
 
     private final DataRepository<T, String> repository;
 
-    public SliceWalker(DataRepository<T, String> repository) {
+    public SliceWalkerWithoutOrderBy(DataRepository<T, String> repository) {
         this.repository = repository;
     }
 
@@ -32,7 +31,7 @@ public abstract class SliceWalker<T extends Ent> extends BaseWalker {
         int i = 1;
         while (firstPage.hasNext()) {
             start = now();
-            var slice = repository.findAllBy(PageRequest.of(i, command.getPageSize(), Sort.Direction.ASC, "id"));
+            var slice = repository.findAllBy(PageRequest.of(i, command.getPageSize()));
             end = now();
             updateCsvDataset(updates, i, start, end);
             if (i % 100 == 0) {

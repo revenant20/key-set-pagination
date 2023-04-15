@@ -9,7 +9,6 @@ import org.hibernate.type.Type;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RowValuesFunction implements SQLFunction {
     @Override
@@ -23,12 +22,15 @@ public class RowValuesFunction implements SQLFunction {
     }
 
     @Override
-    public Type getReturnType(Type type, Mapping mapping) throws QueryException {
+    public Type getReturnType(Type type, Mapping mapping)
+            throws QueryException {
         return BooleanType.INSTANCE;
     }
 
     @Override
-    public String render(Type type, List list, SessionFactoryImplementor sessionFactoryImplementor) throws QueryException {
+    public String render(Type type, List list
+            , SessionFactoryImplementor sessionFactoryImplementor)
+            throws QueryException {
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
         for (int i = 0; i < list.size(); i += 2) {
@@ -37,8 +39,8 @@ public class RowValuesFunction implements SQLFunction {
             names.add(fieldName);
             values.add(fieldValue);
         }
-        String left = "(" + names.stream().collect(Collectors.joining(",")) + ")";
-        String right = "(" + values.stream().collect(Collectors.joining(",")) + ")";
+        String left = "(" + String.join(",", names) + ")";
+        String right = "(" + String.join(",", values) + ")";
         return "(" + left + " >= " + right + ")";
     }
 
